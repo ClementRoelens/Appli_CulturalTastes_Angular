@@ -1,0 +1,34 @@
+mat-toolbar {
+    display:flex;
+    justify-content: space-around;
+    // align-items: center;
+}
+
+#signin {
+    display: flex;
+    justify-content: space-between;
+}
+
+// button {
+//     margin: auto;
+//     border-radius: 30px;
+//     height: 45px;
+//     width: 110px;
+//     padding: 0;
+// }
+
+div div {
+    margin-top: 5px;
+    font-size:0.8em;
+}
+
+h2 {
+    margin-top: 12px;
+    margin-bottom: 0px;
+    font-size: 2.1em;
+    font-weight: normal;
+}
+
+#account_right {
+    width: 110px;
+}

@@ -1,0 +1,40 @@
+
+<mat-toolbar>
+    <ng-container id="signin">
+        <button mat-raised-button *ngIf="!isLogged" (click)="signin()">Connexion</button>
+        <button mat-raised-button *ngIf="isLogged" (click)="signout()">Déconnexion</button>
+    </ng-container>
+    <h2>Bonjour <span *ngIf="isLogged">{{user.nickname}}</span><span *ngIf="!isLogged">visiteur</span>!</h2>
+    <ng-container id="account_right">
+        <button mat-raised-button *ngIf="!isLogged" (click)="signup()" >Inscription</button>
+        <div *ngIf="isLogged">
+            Films aimés : {{user.likedFilmsId.length}}
+        </div>
+        <div *ngIf="isLogged">
+            Films rejetés : {{user.dislikedFilmsId.length}}
+        </div>
+        <div *ngIf="isLogged">
+            Avis laissés : {{user.opinionsId.length}}
+        </div>
+    </ng-container>
+</mat-toolbar>
+
+<!-- <div id="component">
+    <ng-container id="signin">
+        <button mat-raised-button *ngIf="!isLogged" [routerLink]="['/signin']">Connexion</button>
+        <button *ngIf="isLogged" (click)="signout()">Déconnexion</button>
+    </ng-container>
+    <h2>Bonjour <span *ngIf="isLogged">{{user.nickname}}</span><span *ngIf="!isLogged">visiteur</span>!</h2>
+    <div id="account_right">
+        <button *ngIf="!isLogged" [routerLink]="['/signup']" >Inscription</button>
+        <div *ngIf="isLogged">
+            Films aimés : {{user.likedFilmsId.length}}
+        </div>
+        <div *ngIf="isLogged">
+            Films rejetés : {{user.dislikedFilmsId.length}}
+        </div>
+        <div *ngIf="isLogged">
+            Avis laissés : {{user.opinionsId.length}}
+        </div>
+    </div>
+</div> -->

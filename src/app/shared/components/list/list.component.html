@@ -1,0 +1,6 @@
+<li *ngIf="items && !isGenre">
+    <ul *ngFor="let item of items" (click)="selection(item._id)">{{item.title}}</ul>
+</li>
+<li *ngIf="isGenre">
+    <ul *ngFor="let item of items" (click)="genreSelection(item)">{{item}}</ul>
+</li>
