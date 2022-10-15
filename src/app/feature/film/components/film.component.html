@@ -1,6 +1,15 @@
 <mat-spinner *ngIf="loading$ | async"></mat-spinner>
 <div *ngIf="!(loading$ | async)">
-    <app-list id="film-list" *ngIf="films$ | async as films" [items]="films" [isGenre]="false"></app-list>
-    <app-item id="film" [item]="selectedFilm"></app-item>
-    <app-list id="genres" *ngIf="genres$ | async as genres" [items]="genres" [isGenre]="true"></app-list>
+    <app-work-list id="film-list" *ngIf="films$ | async as films" 
+    [works]="films" 
+    
+    ></app-work-list>
+    <app-item id="film" 
+    [item]="selectedFilm"
+    (likedOrDisliked)="onLikedOrDisliked($event)"
+    
+    ></app-item>
+    <app-genre-list id="genres" *ngIf="genres$ | async as genres" 
+    [genres]="genres"
+    ></app-genre-list>
 </div>

@@ -2,3 +2,32 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+li {
+    // border: solid 1px black;
+    border-radius:5px;
+    padding: 7px;
+    text-align: center;
+    font-size: 1.1em;
+    cursor: pointer;
+    list-style-type:none;
+}
+
+li:hover {
+    background-color: #3f51b5;
+    color:white;
+    font-size:1.2em;
+}
+
+ul {
+    list-style: none;
+    padding-left: 0;
+    border-radius:5px;
+    // border:solid 1px black;
+}
+
+#opinions_and_likes .icons,
+#opinionIcons img {
+    width: 30px;
+    cursor: pointer;
+}

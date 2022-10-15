@@ -14,6 +14,10 @@ export class FilmService {
     get films$(): Observable<Film[]> {
         return this._films$;
     }
+    private _oneFilm$ = new BehaviorSubject<Film | null>(null);
+    get oneFilm$() : Observable<Film | null> {
+        return this._oneFilm$;
+    }
     private _loadingFilms$ = new BehaviorSubject<boolean>(false);
     get loadingFilms$(): Observable<boolean> {
         return this._loadingFilms$;
@@ -39,6 +43,12 @@ export class FilmService {
         this.http.get<Film[]>(`${environment.apiUrl}/film/getRandomFilms`).pipe(
             tap(films => this._films$.next(films)),
             tap(() => this.setLoadingFilmsStatus(false))
+        ).subscribe();
+    }
+
+    getOneFilm(id:string){
+        this.http.get<Film>(`${environment.apiUrl}/film/getOneFilm/${id}`).pipe(
+            tap(film=>this._oneFilm$.next(film))
         ).subscribe();
     }
 

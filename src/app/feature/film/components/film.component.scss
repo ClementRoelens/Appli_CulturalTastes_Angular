@@ -1,21 +1,26 @@
 mat-spinner {
-    margin:auto;
-    margin-top:200px;
+    margin: auto;
+    margin-top: 200px;
 }
 
 div {
     display: flex;
     justify-content: space-between;
     margin-top: 15px;
-    width:90%;
+    width: 100%;
 }
 
-app-list ,
-app-list {
-    width:20%;
+app-work-list,
+app-genre-list {
+    width: 20%;
 }
 
-#genres {
+app-genre-list {
     margin-right: 40px;
     margin-top: 35px;
+}
+
+app-item {
+    width:60%;
+    margin-top:70px;
 }

@@ -1,4 +1,4 @@
-<!-- <div *ngIf="item">
+<div *ngIf="item">
     <h1>{{item.title}}</h1>
     <div id="center">
         <div id="opinions_and_likes">
@@ -17,20 +17,20 @@
         </div>
         <img id="poster" [src]="imageUrl" [alt]="item.title">
         <div id="opinionArea">
-            <app-opinion *ngIf="selectedOpinion"
+            <!-- <app-opinion *ngIf="selectedOpinion"
             [opinion]="selectedOpinion"
             [author]="opinionAuthor"
             (opinionIndexChange)="opinionSelection($event)"
             [isLiked]="isOpinionLiked"
             (opinionLiked)="likeOpinion($event)"
-            [isLogged]="isLogged"></app-opinion>
-        </div>
+            [isLogged]="isLogged"></app-opinion> -->
+        </div> 
     </div>
-    <h2 id="director" (click)="getFilms(item.director)">{{item.director}}</h2>
+    <h2 id="director" (click)="getWorks(item.author)">{{item.author}}</h2>
     <h2 id="date">Sorti le {{item.date}}</h2>
     
     <div id="description">
-        <h3>{{item.description}}</h3>
+        <p>{{item.description}}</p>
     </div>
 </div>
- -->
+
