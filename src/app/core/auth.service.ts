@@ -7,13 +7,18 @@ import { Injectable } from "@angular/core";
 import { User } from '../shared/models/user.model';
 import { JwtHelperService } from '@auth0/angular-jwt';
 
+const anonymouseUser:User = new User();
+
 @Injectable()
 export class AuthService {
 
-
-    private _user$ = new BehaviorSubject<User | null>(null);
-    get user$(): Observable<User | null> {
+    private _user$ = new BehaviorSubject<User>(anonymouseUser);
+    get user$(): Observable<User> {
         return this._user$;
+    }
+    private _isLogged$ = new BehaviorSubject<boolean>(false);
+    get isLogged$():Observable<boolean>{
+        return this._isLogged$;
     }
     private _token: string = '';
     get token(): string {
@@ -31,6 +36,7 @@ export class AuthService {
         this.http.post<any>(`${environment.apiUrl}/user/signin`, credentials).pipe(
             tap(user => {
                 this._token = user.token;
+                this._isLogged$.next(true);
                 this.storeJwt(user.token);
             }),
             map(user => {
@@ -43,7 +49,8 @@ export class AuthService {
 
     signout() {
         localStorage.removeItem('User');
-        this._user$.next(null);
+        this._user$.next(anonymouseUser);
+        this._isLogged$.next(false);
         localStorage.removeItem('jwt');
         this._token = '';
     }
@@ -54,13 +61,20 @@ export class AuthService {
         ).subscribe();
     }
 
+    getUsername(id:string) : Observable<string> {
+        return this.http.get<User>(`${environment.apiUrl}/user/getOneUser/${id}`).pipe(
+            map(user=> user.nickname)
+        );
+    }
+
     getStoredJwtUser() {
         const jwt = localStorage.getItem('JWT');
         if (jwt) {
             this._token = jwt;
             const id = this.helper.decodeToken(jwt).userId;
             this.http.get<User>(`${environment.apiUrl}/user/getOneUser/${id}`).pipe(
-                tap(user=>this._user$.next(user))
+                tap(user=>this._user$.next(user)),
+                tap(()=>this._isLogged$.next(true))
             ).subscribe();
         }
     }

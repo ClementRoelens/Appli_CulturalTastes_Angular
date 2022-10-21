@@ -1,7 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
 
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; 
+    // background-color: rgb(200, 204, 220); 
+}
 
 li {
     // border: solid 1px black;
@@ -13,12 +15,6 @@ li {
     list-style-type:none;
 }
 
-li:hover {
-    background-color: #3f51b5;
-    color:white;
-    font-size:1.2em;
-}
-
 ul {
     list-style: none;
     padding-left: 0;
@@ -26,8 +22,25 @@ ul {
     // border:solid 1px black;
 }
 
+li:hover {
+    background-color: #3f51b5;
+    color:white !important;
+    font-size:1.2em;
+}
+
 #opinions_and_likes .icons,
 #opinionIcons img {
     width: 30px;
     cursor: pointer;
+}
+
+h1 {
+    font-weight: 100;
+    font-size: 3em;
+    margin: 0 auto 0 auto;
+}
+
+h1,
+h2 {
+    text-align: center;
 }

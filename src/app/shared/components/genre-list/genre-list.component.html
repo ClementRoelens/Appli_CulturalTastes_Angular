@@ -1,3 +1,5 @@
 <ul>
-    <li *ngFor="let genre of genres" (click)="genreSelection(genre)">{{genre}}</li>
+    <li *ngFor="let genre of genres" 
+    [ngClass]="{ activeGenre : activeGenres.includes(genre) , inactiveGenre : !activeGenres.includes(genre)}"
+    (click)="genreSelection(genre)">{{genre}}</li>
 </ul>

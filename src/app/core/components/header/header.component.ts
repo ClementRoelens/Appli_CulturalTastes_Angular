@@ -5,6 +5,7 @@ import { AuthService } from './../../auth.service';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { User } from 'src/app/shared/models/user.model';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -14,16 +15,19 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class HeaderComponent implements OnInit {
 
-  user$!:Observable<User | null>;
+  user$!:Observable<User>;
+  isLogged$!:Observable<boolean>;
 
   constructor(
     private authService:AuthService,
-    public dialog:MatDialog
+    public dialog:MatDialog,
+    private router:Router
     ) { }
 
   ngOnInit(): void {
     this.authService.getStoredJwtUser();
     this.user$ = this.authService.user$;
+    this.isLogged$ = this.authService.isLogged$;
   }
 
   signup(){
@@ -32,6 +36,9 @@ export class HeaderComponent implements OnInit {
 
   signin(){
     this.dialog.open(SigninComponent);
+    this.dialog.afterAllClosed.pipe(
+      tap(()=>window.location.reload())
+    ).subscribe()
   }
 
   signout(){

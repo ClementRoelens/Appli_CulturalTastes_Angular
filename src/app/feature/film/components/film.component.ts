@@ -1,8 +1,8 @@
-import { JwtHelperService } from '@auth0/angular-jwt';
+import { ActivatedRoute } from '@angular/router';
 import { SharedService } from './../../../shared/shared.service';
 import { AuthService } from './../../../core/auth.service';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { combineLatest, map, Observable, switchMap, tap } from 'rxjs';
+import { combineLatest, map, Observable, take, tap } from 'rxjs';
 import { User } from 'src/app/shared/models/user.model';
 import { Film } from '../film.model';
 import { FilmService } from '../film.service';
@@ -14,60 +14,56 @@ import { SigninComponent } from 'src/app/core/components/signin/signin.component
   selector: 'app-film',
   templateUrl: './film.component.html',
   styleUrls: ['./film.component.scss'],
-  changeDetection:ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FilmComponent implements OnInit {
 
-  user$!:Observable<User | null>;
-  films$!:Observable<Film[]>;
-  loading$!:Observable<boolean>;
-  genres$!:Observable<string[]>;
+  user$!: Observable<User>;
+  films$!: Observable<Film[]>;
+  selectedFilm$!: Observable<Film>;
+  loading$!: Observable<boolean>;
+  genres$!: Observable<string[]>;
+  isLiked$!: Observable<boolean>;
+  isLikedOrDisliked$!: Observable<{ liked: boolean, disliked: boolean }>;
+  activeGenres$!: Observable<string[]>;
 
-  selectedFilm!:Film;
-  userId!:string;
-  isLogged!:boolean;
-  
-  helper:JwtHelperService = new JwtHelperService;
+  userId!: string;
+  isLogged!: boolean;
+  seekedId!: string;
 
   constructor(
-    private filmService:FilmService,
-    private authService:AuthService,
-    private sharedService : SharedService,
-    private snackBar : MatSnackBar,
-    private dialog:MatDialog
-    ) { }
+    private filmService: FilmService,
+    private authService: AuthService,
+    private sharedService: SharedService,
+    private route: ActivatedRoute
+  ) { }
 
   ngOnInit(): void {
-    console.log('Film Init');
-    this.initObservables();
-    this.filmService.getFilms();
+    this.seekedId = this.route.snapshot.params['id'];
+    this.initUserObservables();
+    this.initFilmObservables();
+    this.initGenreObservables();
+    this.initLikedAndDislikedObservable();
     this.filmService.getGenres();
+    this.filmService.getFilms(this.seekedId === undefined);
   }
 
-  
-
-  initObservables(){
-    console.log("FIlm init observables");
-
+  private initUserObservables() {
     this.authService.user$.pipe(
-      tap(user=> this.isLogged = user ? true : false),
-      tap(()=>{
-        const jwt = localStorage.getItem('JWT');
-        if (jwt){
-          this.userId = this.helper.decodeToken(jwt).userId;
-        }
-      })
-      ).subscribe();
+      tap(user => this.isLogged = user.nickname ? true : false),
+      tap(user => this.userId = user._id ? user._id : '')
+    ).subscribe();
     this.user$ = this.authService.user$;
+  }
 
-    this.films$ = this.filmService.films$.pipe(
-      tap(films=>{
-        const rand = Math.round(Math.random() * (films.length - 1));
-        this.selectedFilm = films[rand];
-      })
-    );
+  private initFilmObservables() {
+    this.filmService.films$.pipe(
+      take(1),
+      tap(() => this.getOneFilm(this.seekedId))
+    ).subscribe();
 
-    this.genres$ = this.filmService.genres$;
+    this.films$ = this.filmService.films$;
+    this.selectedFilm$ = this.filmService.selectedFilm$;
 
     const loadingFilms = this.filmService.loadingFilms$;
     const loadingGenres = this.filmService.loadingGenres$;
@@ -75,19 +71,68 @@ export class FilmComponent implements OnInit {
       loadingFilms,
       loadingGenres
     ]).pipe(
-      map(([loadingFilms,loadingGenres]) => loadingFilms || loadingGenres)
+      map(([loadingFilms, loadingGenres]) => loadingFilms || loadingGenres)
     );
   }
 
-  onLikedOrDisliked(action:string){
-    if (!this.isLogged){
-      let snackBarRef = this.snackBar.open('Vous devez être connectés pour effectuer cette action','Se connecter',{ duration : 4000});
-      snackBarRef.onAction().subscribe(()=>{
-        this.dialog.open(SigninComponent)
-      });
-    }
-    else {
-      this.sharedService.likeOrDislikeItem(this.selectedFilm._id,'film',this.userId,action);
-    }
+  private initGenreObservables() {
+    this.genres$ = this.filmService.genres$;
+    const genres = this.genres$;
+    const film = this.selectedFilm$;
+
+    this.activeGenres$ = combineLatest([
+      genres,
+      film
+    ]).pipe(
+      map(([genres, film]) => {
+        let activeGenres: string[] = [];
+        genres.forEach(genre => {
+          if (film.genres.includes(genre)) {
+            activeGenres.push(genre);
+          }
+        });
+        return activeGenres;
+      })
+    );
   }
+
+  private initLikedAndDislikedObservable() {
+    const user = this.user$;
+    const film = this.selectedFilm$;
+
+    this.isLikedOrDisliked$ = combineLatest([
+      user,
+      film
+    ]).pipe(
+      map(([user, film]) => {
+        if (this.isLogged && film._id) {
+          const isLiked = user.likedFilmsId.includes(film._id);
+          const isDisliked = user.dislikedFilmsId.includes(film._id);
+          return {
+            liked: isLiked,
+            disliked: isDisliked
+          }
+        }
+        else {
+          return {
+            liked: false,
+            disliked: false
+          }
+        }
+      })
+    );
+  }
+
+  getFilmsFromOneAuthor(author: string) {
+    this.filmService.getFilmsFromOneAuthor(author);
+  }
+
+  getOneFilm(id: string) {
+    this.filmService.getOneFilm(id);
+  }
+
+  getFilmsFromOneGenre(genre: string) {
+    this.filmService.getFilmsFromOneGenre(genre);
+  }
+
 }

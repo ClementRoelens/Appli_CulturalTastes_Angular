@@ -1,3 +1,4 @@
+import { OpinionService } from './opinion.service';
 import { SharedService } from './shared.service';
 import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
@@ -7,13 +8,13 @@ import { OpinionComponent } from './components/opinion/opinion.component';
 import { UserComponent } from './components/user/user.component';
 import { MaterialModule } from './material.module';
 import { GenreListComponent } from './components/genre-list/genre-list.component';
-import { WorkListComponent } from './components/work-list/work-list.component';
+import { ItemListComponent } from './components/item-list/item-list.component';
 
 @NgModule({
   declarations: [
     OpinionComponent,
     GenreListComponent,
-    WorkListComponent,
+    ItemListComponent,
     UserComponent,
     ItemComponent
   ],
@@ -25,14 +26,15 @@ import { WorkListComponent } from './components/work-list/work-list.component';
   exports: [
     OpinionComponent,
     GenreListComponent,
-    WorkListComponent,
+    ItemListComponent,
     UserComponent,
     ItemComponent,
     MaterialModule,
     RouterModule
   ],
   providers:[
-    SharedService
+    SharedService,
+    OpinionService
   ]
 })
 export class SharedModule { }

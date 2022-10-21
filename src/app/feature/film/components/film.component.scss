@@ -6,21 +6,33 @@ mat-spinner {
 div {
     display: flex;
     justify-content: space-between;
-    margin-top: 15px;
+    // padding-top: 15px;
     width: 100%;
+    height:100%;
+}
+
+app-work-list,app-item,app-genre-list {
+height:100%;
+margin-top:0;
+margin-bottom: 0;
 }
 
 app-work-list,
 app-genre-list {
     width: 20%;
+    // background-color:rgb(163, 169, 194);
+    // border-radius:10px;
+    // border:solid 2px black;
+
 }
 
 app-genre-list {
-    margin-right: 40px;
-    margin-top: 35px;
+    padding-right: 40px;
+    padding-top: 35px;
 }
 
 app-item {
     width:60%;
-    margin-top:70px;
+    padding-top:70px;
+    // background-color: rgb(200, 204, 220);
 }

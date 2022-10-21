@@ -1,1 +1,16 @@
-<p>opinion works!</p>
+<ng-container *ngIf="opinion$ | async as opinion">
+    <div id="opinion" *ngIf="opinion._id">
+        <h1>{{username$ | async}}</h1>
+        <p>{{opinion.content}}</p>
+        <div id="opinionIcons">
+            <img src="../assets/arrow_left.png" alt="arrow_left" (click)="opinionSelection(-1)">
+            <div>
+                <span>{{opinion.likes}}</span>
+                <img [src]="likedOpinionIcon" alt="heart_icon" (click)="likeOpinion(opinion._id)">
+            </div>
+            <img src="../assets/arrow_right.png" alt="arrow_right" (click)="opinionSelection(1)">
+            </div>
+        </div>
+   
+</ng-container>
+   
