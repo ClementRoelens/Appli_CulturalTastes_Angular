@@ -4,6 +4,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from "@angular/core";
 import { Opinion } from './models/opinion.model';
 
+const anonymousOpinion:Opinion = new Opinion;
+
 @Injectable()
 export class OpinionService {
 
@@ -15,16 +17,13 @@ export class OpinionService {
     get selectedOpinion$(): Observable<Opinion> {
         return this._selectedOpinion$;
     }
-    private _loading$ = new BehaviorSubject<boolean>(false);
-    get loading$(): Observable<boolean> {
-        return this._loading$;
-    }
 
     private index:number = 0; 
 
     constructor(private http: HttpClient) { }
 
     getOpinions(opinionsId: string[]) {
+        this._selectedOpinion$.next(anonymousOpinion);
         let opinions: Opinion[] = [];
         let opinionCount = 0;
         opinionsId.forEach(opinionId => {

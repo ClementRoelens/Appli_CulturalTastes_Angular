@@ -1,3 +1,4 @@
+import { NewOpinionComponent } from './../new-opinion/new-opinion.component';
 import { SharedService } from './../../shared.service';
 import { OpinionService } from './../../opinion.service';
 import { Opinion } from './../../models/opinion.model';
@@ -22,6 +23,7 @@ export class ItemComponent implements OnInit {
   opinions$!:Observable<Opinion[]>;
 
   @Input() item!: Film | Game | Album;
+  @Input() itemType!:string;
   @Input() isLikedOrDisliked!: { liked: boolean, disliked: boolean };
   @Input() likedOpinionsId!: string[];
   @Input() userId!:string;
@@ -67,12 +69,18 @@ export class ItemComponent implements OnInit {
         this.sharedService.likeOrDislikeItem(this.item._id, 'film', this.userId, action);
       }
     }
-
-
   }
 
   addOpinion() {
-
+    let dialogRef = this.dialog.open(NewOpinionComponent,{
+      data : {
+        userId : this.userId,
+        itemId : this.item._id,
+        itemType : this.itemType
+      },
+      width:'450px',
+      height:'280px'
+    });
   }
 
   opinionCheck(id: string) {

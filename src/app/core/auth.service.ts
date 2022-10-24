@@ -28,9 +28,17 @@ export class AuthService {
 
     constructor(private http: HttpClient) { }
 
-    signin(nicknameP: string, passwordP: string) {
+    signup(usernameP:string,passwordP:string) : Observable<any>{
+        const body = {
+            username:usernameP,
+            password:passwordP
+        };
+        return this.http.post(`${environment.apiUrl}/user/signup`,body,{observe:"response"});
+    }
+
+    signin(usernameP: string, passwordP: string) {
         const credentials = {
-            nickname: nicknameP,
+            username: usernameP,
             password: passwordP
         }
         this.http.post<any>(`${environment.apiUrl}/user/signin`, credentials).pipe(
@@ -51,7 +59,7 @@ export class AuthService {
         localStorage.removeItem('User');
         this._user$.next(anonymouseUser);
         this._isLogged$.next(false);
-        localStorage.removeItem('jwt');
+        localStorage.removeItem('JWT');
         this._token = '';
     }
 
@@ -63,7 +71,7 @@ export class AuthService {
 
     getUsername(id:string) : Observable<string> {
         return this.http.get<User>(`${environment.apiUrl}/user/getOneUser/${id}`).pipe(
-            map(user=> user.nickname)
+            map(user=> user.username)
         );
     }
 

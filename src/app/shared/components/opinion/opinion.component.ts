@@ -17,7 +17,6 @@ export class OpinionComponent implements OnInit {
   @Output() opinionLiked = new EventEmitter<string>();
 
   isLiked!: boolean;
-  index!: number;
   likedOpinionIcon!: string;
 
   constructor(

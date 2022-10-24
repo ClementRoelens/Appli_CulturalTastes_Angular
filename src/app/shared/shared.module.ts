@@ -1,3 +1,5 @@
+import { ReactiveFormsModule } from '@angular/forms';
+import { NewOpinionComponent } from './components/new-opinion/new-opinion.component';
 import { OpinionService } from './opinion.service';
 import { SharedService } from './shared.service';
 import { RouterModule } from '@angular/router';
@@ -13,6 +15,7 @@ import { ItemListComponent } from './components/item-list/item-list.component';
 @NgModule({
   declarations: [
     OpinionComponent,
+    NewOpinionComponent,
     GenreListComponent,
     ItemListComponent,
     UserComponent,
@@ -21,10 +24,12 @@ import { ItemListComponent } from './components/item-list/item-list.component';
   imports: [
     CommonModule,
     MaterialModule,
-    RouterModule
+    RouterModule,
+    ReactiveFormsModule
   ],
   exports: [
     OpinionComponent,
+    NewOpinionComponent,
     GenreListComponent,
     ItemListComponent,
     UserComponent,

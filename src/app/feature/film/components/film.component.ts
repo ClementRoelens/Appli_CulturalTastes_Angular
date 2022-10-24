@@ -1,4 +1,4 @@
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, TitleStrategy } from '@angular/router';
 import { SharedService } from './../../../shared/shared.service';
 import { AuthService } from './../../../core/auth.service';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
@@ -27,6 +27,7 @@ export class FilmComponent implements OnInit {
   isLikedOrDisliked$!: Observable<{ liked: boolean, disliked: boolean }>;
   activeGenres$!: Observable<string[]>;
 
+  itemType!:string;
   userId!: string;
   isLogged!: boolean;
   seekedId!: string;
@@ -39,6 +40,7 @@ export class FilmComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.itemType='film'
     this.seekedId = this.route.snapshot.params['id'];
     this.initUserObservables();
     this.initFilmObservables();
@@ -50,7 +52,7 @@ export class FilmComponent implements OnInit {
 
   private initUserObservables() {
     this.authService.user$.pipe(
-      tap(user => this.isLogged = user.nickname ? true : false),
+      tap(user => this.isLogged = user.username ? true : false),
       tap(user => this.userId = user._id ? user._id : '')
     ).subscribe();
     this.user$ = this.authService.user$;

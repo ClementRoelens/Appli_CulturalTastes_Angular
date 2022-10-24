@@ -1,0 +1,10 @@
+<mat-card>
+    <mat-form-field>
+        <textarea matInput placeholder="Votre avis" 
+        [formControl]="opinionForm"
+        rows="7"></textarea>
+    </mat-form-field>
+    <mat-card-actions>
+        <button mat-raised-button (click)="sendOpinion()">Envoyer</button>
+    </mat-card-actions>
+</mat-card>

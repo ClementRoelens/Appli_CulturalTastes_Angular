@@ -1,0 +1,20 @@
+
+<mat-card [formGroup]="userForm">
+    <mat-form-field>
+        <input matInput placeholder="Pseudo" type="text" formControlName="username">
+    </mat-form-field>
+    <mat-form-field>
+        <input matInput placeholder="Mot de passe" type="password" formControlName="password">
+    </mat-form-field>
+</mat-card>
+<mat-card-actions>
+    <button (click)="signup()">Inscription</button>
+</mat-card-actions>
+<!-- <h1>Inscription</h1>
+<form [formGroup]="userForm">
+    <label for="username">Pseudo : </label>
+    <input type="text" formControlName="username">
+    <label for="password">Mot de passe : </label>
+    <input type="password" formControlName="password">
+</form>
+<button (click)="signup()">Inscription</button> -->

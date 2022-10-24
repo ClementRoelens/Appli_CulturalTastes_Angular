@@ -7,7 +7,8 @@
             ></app-item-list>
             <ng-container *ngIf="isLikedOrDisliked$ | async as isLikedOrDisliked">
                 <app-item id="film" *ngIf="user$ | async as user"
-                [item]="selectedFilm" 
+                [item]="selectedFilm"
+                [itemType]="itemType" 
                 [isLikedOrDisliked]="isLikedOrDisliked"
                 [likedOpinionsId]="user.likedOpinionsId"
                 [userId]="userId"

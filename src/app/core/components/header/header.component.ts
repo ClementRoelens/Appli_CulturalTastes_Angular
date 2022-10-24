@@ -1,3 +1,4 @@
+import { SignupComponent } from './../signup/signup.component';
 import { tap } from 'rxjs';
 import { Observable } from 'rxjs';
 import { SigninComponent } from './../signin/signin.component';
@@ -31,12 +32,15 @@ export class HeaderComponent implements OnInit {
   }
 
   signup(){
-    
+    let signupRef = this.dialog.open(SignupComponent);
+    signupRef.afterClosed().pipe(
+      tap(()=>window.location.reload())
+    ).subscribe();
   }
 
   signin(){
-    this.dialog.open(SigninComponent);
-    this.dialog.afterAllClosed.pipe(
+    let signinRef = this.dialog.open(SigninComponent);
+    signinRef.afterClosed().pipe(
       tap(()=>window.location.reload())
     ).subscribe()
   }

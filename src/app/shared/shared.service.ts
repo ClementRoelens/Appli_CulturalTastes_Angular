@@ -41,4 +41,22 @@ export class SharedService {
             tap(() => this.opinionService.selectOpinion(opinionIdP))
         ).subscribe();
     }
+
+    addOpinion(itemIdP: string, userIdP: string, contentP: string, itemTypeP:string){
+        const body = {
+            itemId: itemIdP,
+            userId: userIdP,
+            content: contentP,
+            itemType:itemTypeP
+          };
+          this.http.post<{opinion:Opinion,film:Film,user:User}>(`${environment.apiUrl}/shared/addOneOpinion`,body).pipe(
+            tap(()=>this.authService.getUser(userIdP)),
+            tap(()=>this.filmService.getOneFilm(itemIdP)),
+            tap((res:{opinion:Opinion,film:Film,user:User}) => {
+                if (res.opinion._id){
+                    this.opinionService.getOneOpinion(res.opinion._id);
+                }
+            })
+          ).subscribe()
+    }
 }

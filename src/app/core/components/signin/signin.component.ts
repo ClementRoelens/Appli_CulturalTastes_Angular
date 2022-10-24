@@ -20,13 +20,13 @@ export class SigninComponent implements OnInit {
 
   ngOnInit(): void {
     this.userForm = this.formBuilder.group({
-      nickname: ['', Validators.required],
+      username: ['', Validators.required],
       password: ['', Validators.required]
     });
   }
 
   signin() {
-    this.authService.signin(this.userForm.value['nickname'], this.userForm.value['password']);
+    this.authService.signin(this.userForm.value['username'], this.userForm.value['password']);
     this.dialogRef.close();
   }
 }
