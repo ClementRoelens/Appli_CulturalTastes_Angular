@@ -1,12 +1,10 @@
 import { SignupComponent } from './../signup/signup.component';
-import { tap } from 'rxjs';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { SigninComponent } from './../signin/signin.component';
 import { AuthService } from './../../auth.service';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { User } from 'src/app/shared/models/user.model';
 import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -21,8 +19,7 @@ export class HeaderComponent implements OnInit {
 
   constructor(
     private authService:AuthService,
-    public dialog:MatDialog,
-    private router:Router
+    public dialog:MatDialog
     ) { }
 
   ngOnInit(): void {

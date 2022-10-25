@@ -1,9 +1,10 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-genre-list',
   templateUrl: './genre-list.component.html',
-  styleUrls: ['./genre-list.component.scss']
+  styleUrls: ['./genre-list.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GenreListComponent implements OnInit {
 

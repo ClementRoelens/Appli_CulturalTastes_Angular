@@ -43,9 +43,7 @@ export class FilmService {
         this._loadingGenres$.next(loading);
     }
 
-    getFilms(getOneRandom:boolean,urlP?: string) {
-        console.log('filmService.getFilms lancé');
-        console.log("getOneRandom : "+getOneRandom);
+    getFilms(getOneRandom: boolean, urlP?: string) {
         this.setLoadingFilmsStatus(true);
         let url = `${environment.apiUrl}/film/`;
         if (urlP) {
@@ -54,13 +52,10 @@ export class FilmService {
         else {
             url += 'getRandomFilms'
         }
-        console.log('FilmService.getFilms : url = ' + url);
         this.http.get<Film[]>(url).pipe(
-            tap(()=>console.log('filmsService : émission de films')),
             tap(films => {
                 this._films$.next(films);
-                if (getOneRandom){
-                    console.log('FilmService : émission d\'un film random');
+                if (getOneRandom) {
                     const rand = Math.round(Math.random() * (films.length - 1));
                     this._selectedFilm$.next(films[rand]);
                 }
@@ -70,11 +65,11 @@ export class FilmService {
     }
 
     getFilmsFromOneAuthor(author: string) {
-        this.getFilms(true,`getRandomInOneAuthor/${author}`);
+        this.getFilms(true, `getRandomInOneAuthor/${author}`);
     }
 
     getFilmsFromOneGenre(genre: string) {
-        this.getFilms(true,`getRandomInOneGenre/${genre}`);
+        this.getFilms(true, `getRandomInOneGenre/${genre}`);
     }
 
     getOneFilm(id?: string) {

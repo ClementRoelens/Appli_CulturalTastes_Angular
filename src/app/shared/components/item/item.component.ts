@@ -3,7 +3,7 @@ import { SharedService } from './../../shared.service';
 import { OpinionService } from './../../opinion.service';
 import { Opinion } from './../../models/opinion.model';
 import { environment } from './../../../../environments/environment';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Film } from 'src/app/feature/film/film.model';
 import { Game } from 'src/app/feature/game/game.model';
@@ -16,7 +16,8 @@ import { SigninComponent } from 'src/app/core/components/signin/signin.component
 @Component({
   selector: 'app-item',
   templateUrl: './item.component.html',
-  styleUrls: ['./item.component.scss']
+  styleUrls: ['./item.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ItemComponent implements OnInit {
 
@@ -44,13 +45,10 @@ export class ItemComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.opinions$ = this.opinionService.opinions$.pipe(
-      tap(()=>console.log('ItemComponent : récupération des opinions'))
-    );
+    this.opinions$ = this.opinionService.opinions$;
   }
 
   ngOnChanges() {
-    console.log('ItemonChanges : ' + this.item.title);
     this.imageUrl = `${environment.apiUrl}/${this.item.imageUrl}`;
     this.likedIcon = this.isLikedOrDisliked.liked ? "./assets/thumbup_done.png" : "./assets/thumbup.png";
     this.dislikedIcon = this.isLikedOrDisliked.disliked ? "./assets/thumbdown_done.png" : "./assets/thumbdown.png";

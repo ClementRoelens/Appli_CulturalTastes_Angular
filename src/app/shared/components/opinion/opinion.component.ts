@@ -1,13 +1,14 @@
 import { OpinionService } from './../../opinion.service';
 import { Observable, combineLatest, map, tap, switchMap } from 'rxjs';
-import { Component, Input, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, Input, OnInit, EventEmitter, Output, ChangeDetectionStrategy } from '@angular/core';
 import { Opinion } from '../../models/opinion.model';
 import { AuthService } from 'src/app/core/auth.service';
 
 @Component({
   selector: 'app-opinion',
   templateUrl: './opinion.component.html',
-  styleUrls: ['./opinion.component.scss']
+  styleUrls: ['./opinion.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class OpinionComponent implements OnInit {
 
@@ -34,10 +35,13 @@ export class OpinionComponent implements OnInit {
       this.opinion$
     ]).pipe(
       tap(([user, opinion]) => {
-        if (opinion._id) {
+        if (opinion._id && user._id) {
           this.isLiked = user.likedOpinionsId.includes(opinion._id);
-          this.likedOpinionIcon = (this.isLiked) ? "./assets/full_heart.png" : "./assets/empty_heart.png";
         }
+        else {
+          this.isLiked = false;
+        }
+        this.likedOpinionIcon = (this.isLiked) ? "./assets/full_heart.png" : "./assets/empty_heart.png";
       })
     ).subscribe();
   }

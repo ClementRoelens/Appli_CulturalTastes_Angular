@@ -6,9 +6,6 @@ import { combineLatest, map, Observable, take, tap } from 'rxjs';
 import { User } from 'src/app/shared/models/user.model';
 import { Film } from '../film.model';
 import { FilmService } from '../film.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatDialog } from '@angular/material/dialog';
-import { SigninComponent } from 'src/app/core/components/signin/signin.component';
 
 @Component({
   selector: 'app-film',
@@ -35,7 +32,6 @@ export class FilmComponent implements OnInit {
   constructor(
     private filmService: FilmService,
     private authService: AuthService,
-    private sharedService: SharedService,
     private route: ActivatedRoute
   ) { }
 
