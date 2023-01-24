@@ -49,7 +49,7 @@ export class ItemComponent implements OnInit {
   }
 
   ngOnChanges() {
-    this.imageUrl = `${environment.apiUrl}/${this.item.imageUrl}`;
+    this.imageUrl = `${environment.apiUrl}/film/${this.item.imageUrl}`;
     this.likedIcon = this.isLikedOrDisliked.liked ? "./assets/thumbup_done.png" : "./assets/thumbup.png";
     this.dislikedIcon = this.isLikedOrDisliked.disliked ? "./assets/thumbdown_done.png" : "./assets/thumbdown.png";
     this.opinionService.getOpinions(this.item.opinionsId);

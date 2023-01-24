@@ -25,7 +25,7 @@ export class SharedService {
             userId: userIdP,
             action: actionP
         };
-        this.http.put<{ user: User, film: Film }>(`${environment.apiUrl}/shared/likeOrDislikeItem`, body).pipe(
+        this.http.put(`${environment.apiUrl}/shared/likeOrDislikeItem`, body).pipe(
             tap(() => this.authService.getUser(userIdP)),
             tap(() => this.filmService.getOneFilm(itemIdP))
         ).subscribe();

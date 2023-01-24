@@ -7,17 +7,22 @@ import { Injectable } from "@angular/core";
 import { User } from '../shared/models/user.model';
 import { JwtHelperService } from '@auth0/angular-jwt';
 
-const anonymouseUser:User = new User();
+const anonymouseUser: User = new User();
 
 @Injectable()
 export class AuthService {
+
+    private _logging$ = new BehaviorSubject<boolean>(false);
+    get logging$(): Observable<boolean> {
+        return this._logging$;
+    }
 
     private _user$ = new BehaviorSubject<User>(anonymouseUser);
     get user$(): Observable<User> {
         return this._user$;
     }
     private _isLogged$ = new BehaviorSubject<boolean>(false);
-    get isLogged$():Observable<boolean>{
+    get isLogged$(): Observable<boolean> {
         return this._isLogged$;
     }
     private _token: string = '';
@@ -28,15 +33,16 @@ export class AuthService {
 
     constructor(private http: HttpClient) { }
 
-    signup(usernameP:string,passwordP:string) : Observable<any>{
+    signup(usernameP: string, passwordP: string): Observable<any> {
         const body = {
-            username:usernameP,
-            password:passwordP
+            username: usernameP,
+            password: passwordP
         };
-        return this.http.post(`${environment.apiUrl}/user/signup`,body,{observe:"response"});
+        return this.http.post(`${environment.apiUrl}/user/signup`, body, { observe: "response" });
     }
 
     signin(usernameP: string, passwordP: string) {
+        this._logging$.next(true);
         const credentials = {
             username: usernameP,
             password: passwordP
@@ -51,7 +57,10 @@ export class AuthService {
                 delete user.token;
                 return user;
             }),
-            tap(user => this._user$.next(user))
+            tap(user => {
+                this._user$.next(user);
+                this._logging$.next(false);
+            })
         ).subscribe()
     }
 
@@ -69,9 +78,9 @@ export class AuthService {
         ).subscribe();
     }
 
-    getUsername(id:string) : Observable<string> {
+    getUsername(id: string): Observable<string> {
         return this.http.get<User>(`${environment.apiUrl}/user/getOneUser/${id}`).pipe(
-            map(user=> user.username)
+            map(user => user.username)
         );
     }
 
@@ -79,11 +88,17 @@ export class AuthService {
         const jwt = localStorage.getItem('JWT');
         if (jwt) {
             this._token = jwt;
-            const id = this.helper.decodeToken(jwt).userId;
-            this.http.get<User>(`${environment.apiUrl}/user/getOneUser/${id}`).pipe(
-                tap(user=>this._user$.next(user)),
-                tap(()=>this._isLogged$.next(true))
-            ).subscribe();
+            const decodedToken = this.helper.decodeToken(jwt);
+            const expiredDate = decodedToken.exp;
+            const now = Date.now()/1000;
+            if (now < expiredDate)  {
+                const id = decodedToken.userId;
+                this.http.get<User>(`${environment.apiUrl}/user/getOneUser/${id}`).pipe(
+                    tap(user => this._user$.next(user)),
+                    tap(() => this._isLogged$.next(true))
+                ).subscribe();
+            }
+
         }
     }
 

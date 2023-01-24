@@ -9,5 +9,6 @@ export class Game {
     likes!: number;
     dislikes!: number;
     opinionsId!: string[];
+    genres!:string[];
     imageUrl!:string;
 }

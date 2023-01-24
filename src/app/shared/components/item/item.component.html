@@ -15,7 +15,7 @@
                 <div>{{item.opinionsId.length}}</div>
             </div>
         </div>
-        <img id="poster" [src]="imageUrl" [alt]="item.title">
+        <img id="poster" [src]="imageUrl" [alt]="item.title"> 
         <div id="opinionArea">
             <app-opinion *ngIf="opinions$ | async as opinions"
             (opinionLiked)="likeOpinion($event)"

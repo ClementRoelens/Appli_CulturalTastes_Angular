@@ -2,6 +2,7 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { AuthService } from './../../auth.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { tap } from 'rxjs';
 
 @Component({
   selector: 'app-signin',
@@ -27,6 +28,13 @@ export class SigninComponent implements OnInit {
 
   signin() {
     this.authService.signin(this.userForm.value['username'], this.userForm.value['password']);
-    this.dialogRef.close();
+    this.authService.logging$.pipe(
+      tap( logging => {
+        if (!logging){
+          this.dialogRef.close();
+        }
+      })
+    ).subscribe();
+    
   }
 }
