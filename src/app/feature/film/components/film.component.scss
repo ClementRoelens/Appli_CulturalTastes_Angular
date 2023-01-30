@@ -6,29 +6,26 @@ mat-spinner {
 div {
     display: flex;
     justify-content: space-between;
-    // padding-top: 15px;
     width: 100%;
     height:100%;
 }
 
-app-work-list,app-item,app-genre-list {
-height:100%;
-margin-top:0;
-margin-bottom: 0;
-}
-
-app-work-list,
+app-item-list,
 app-genre-list {
     width: 20%;
-    // background-color:rgb(163, 169, 194);
-    // border-radius:10px;
-    // border:solid 2px black;
-
+    position:relative;
+    top:70px;
 }
 
 app-genre-list {
     padding-right: 40px;
-    padding-top: 35px;
+    // padding-top: 35px; 
+}
+
+app-item-list {
+   
+    left:5%;
+    // padding-left:40px;
 }
 
 app-item {

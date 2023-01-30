@@ -14,7 +14,6 @@ export class CreateOrModifyOpinionComponent implements OnInit {
   }
 
   close(choice:string){
-    console.log("CreateOrModifyOpinion.Close sur "+choice);
     this.dialogRef.close(choice);
   }
 }

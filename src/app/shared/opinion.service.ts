@@ -19,11 +19,12 @@ export class OpinionService {
         return this._selectedOpinion$;
     }
 
-    private index: number = 0;
+    private _index: number = 0;
 
     constructor(private http: HttpClient) { }
 
     getOpinions(opinionsId: string[]) {
+        console.log("OpinionService.getOpinions()")
         if (opinionsId.length !== 0){
             let opinions: Opinion[] = [];
             if (opinionsId.length > 0) {
@@ -55,7 +56,7 @@ export class OpinionService {
         opinions.sort((a, b) => b.likes - a.likes);
         this._opinions$.next(opinions);
         this._selectedOpinion$.next(opinions[0]);
-        this.index = 0;
+        this._index = 0;
     }
 
     opinionUpdated(opinion: Opinion) {
@@ -64,8 +65,10 @@ export class OpinionService {
         const i = opinionsId.indexOf(opinion._id);
         if (i !== -1){
             opinions[i] = opinion;
+            this._index = i;
         } else{
             opinions.push(opinion);
+            this._index = opinions.length-1;
         }
         this._opinions$.next(opinions);
         this._selectedOpinion$.next(opinion);
@@ -84,11 +87,11 @@ export class OpinionService {
     }
 
     indexChange(n: number) {
-        const newIndex = this.index + n;
+        const newIndex = this._index + n;
         const opinions = this._opinions$.getValue();
         if (newIndex >= 0 && newIndex < opinions.length) {
-            this.index = newIndex;
-            this._selectedOpinion$.next(opinions[this.index]);
+            this._index = newIndex;
+            this._selectedOpinion$.next(opinions[this._index]);
         }
     }
 

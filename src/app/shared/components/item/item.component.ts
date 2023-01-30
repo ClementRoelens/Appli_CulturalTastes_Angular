@@ -68,18 +68,15 @@ export class ItemComponent implements OnInit {
         });
       }
       else {
-        this.sharedService.likeOrDislikeItem(this.item._id, 'film', this.user._id, action);
+        this.sharedService.likeOrDislikeItem(this.item._id, this.itemType, this.user._id, action);
       }
     }
   }
 
   modifyOrCreateOpinion() {
     if (this.existingOpinion !== null && this.item.opinionsId.length > 0) {
-      let opinionId = "";
-      if (this.existingOpinion._id) {
-        opinionId = this.existingOpinion._id;
-      }
-      let dialogRef = this.dialog.open(CreateOrModifyOpinionComponent, { width: '450px', height: '280px' });
+      let opinionId = this.existingOpinion._id;
+      let dialogRef = this.dialog.open(CreateOrModifyOpinionComponent, { width: '460px', height: '235px' });
       dialogRef.afterClosed().subscribe(result => {
         if (result == "modify") {
           this.writeOpinion(false);
