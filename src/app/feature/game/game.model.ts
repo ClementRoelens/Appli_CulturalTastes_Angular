@@ -1,5 +1,5 @@
 export class Game {
-    _id?:string;
+    _id!:string;
     title!:string;
     // Pour faciliter la réutilisation de component, on utilise author pour désigner le studio de développemnt
     author!:string;

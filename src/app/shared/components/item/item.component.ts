@@ -1,3 +1,4 @@
+import { CreateOrModifyOpinionComponent } from './../create-or-modify-opinion/create-or-modify-opinion.component';
 import { NewOpinionComponent } from './../new-opinion/new-opinion.component';
 import { SharedService } from './../../shared.service';
 import { OpinionService } from './../../opinion.service';
@@ -12,6 +13,7 @@ import { Observable, tap } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { SigninComponent } from 'src/app/core/components/signin/signin.component';
+import { User } from '../../models/user.model';
 
 @Component({
   selector: 'app-item',
@@ -21,38 +23,40 @@ import { SigninComponent } from 'src/app/core/components/signin/signin.component
 })
 export class ItemComponent implements OnInit {
 
-  opinions$!:Observable<Opinion[]>;
-
   @Input() item!: Film | Game | Album;
-  @Input() itemType!:string;
+  @Input() itemType!: string;
   @Input() isLikedOrDisliked!: { liked: boolean, disliked: boolean };
   @Input() likedOpinionsId!: string[];
-  @Input() userId!:string;
-  @Input() isLogged!:boolean;
+  @Input() user!: User;
+  @Input() isLogged!: boolean;
 
   likedIcon!: string;
   dislikedIcon!: string;
   imageUrl!: string;
   isOpinionLiked!: boolean;
+  existingOpinion!: Opinion | null;
 
   @Output() authorRequested = new EventEmitter<string>();
 
   constructor(
-    private opinionService:OpinionService,
-    private sharedService : SharedService,
+    private opinionService: OpinionService,
+    private sharedService: SharedService,
     private snackBar: MatSnackBar,
     private dialog: MatDialog,
   ) { }
 
   ngOnInit(): void {
-    this.opinions$ = this.opinionService.opinions$;
   }
 
   ngOnChanges() {
+    console.log("Item focus : " + this.item._id);
     this.imageUrl = `${environment.apiUrl}/film/${this.item.imageUrl}`;
     this.likedIcon = this.isLikedOrDisliked.liked ? "./assets/thumbup_done.png" : "./assets/thumbup.png";
     this.dislikedIcon = this.isLikedOrDisliked.disliked ? "./assets/thumbdown_done.png" : "./assets/thumbdown.png";
-    this.opinionService.getOpinions(this.item.opinionsId);
+  }
+
+  opinionExists(opinion: Opinion | null) {
+    this.existingOpinion = opinion;
   }
 
   likeOrDislike(action: string) {
@@ -64,21 +68,55 @@ export class ItemComponent implements OnInit {
         });
       }
       else {
-        this.sharedService.likeOrDislikeItem(this.item._id, 'film', this.userId, action);
+        this.sharedService.likeOrDislikeItem(this.item._id, 'film', this.user._id, action);
       }
     }
   }
 
-  addOpinion() {
-    let dialogRef = this.dialog.open(NewOpinionComponent,{
-      data : {
-        userId : this.userId,
-        itemId : this.item._id,
-        itemType : this.itemType
-      },
-      width:'450px',
-      height:'280px'
+  modifyOrCreateOpinion() {
+    if (this.existingOpinion !== null && this.item.opinionsId.length > 0) {
+      let opinionId = "";
+      if (this.existingOpinion._id) {
+        opinionId = this.existingOpinion._id;
+      }
+      let dialogRef = this.dialog.open(CreateOrModifyOpinionComponent, { width: '450px', height: '280px' });
+      dialogRef.afterClosed().subscribe(result => {
+        if (result == "modify") {
+          this.writeOpinion(false);
+        } else if (result == "erase") {
+          this.eraseOpinion(opinionId);
+        }
+      })
+    } else {
+      this.writeOpinion(true);
+    }
+  }
+
+  private writeOpinion(newOne: boolean) {
+    let data = {};
+    if (newOne) {
+      data = {
+        userId: this.user._id,
+        username: this.user.username,
+        itemId: this.item._id,
+        itemType: this.itemType
+      }
+    } else {
+      data = {
+        existingOpinionContent: this.existingOpinion?.content,
+        opinionId: this.existingOpinion?._id
+      };
+    }
+    let dialogRef = this.dialog.open(NewOpinionComponent, {
+      data,
+      width: '450px',
+      height: '280px'
     });
+  }
+
+  private eraseOpinion(id: string) {
+    console.log("eraseOpinion(), appel du service");
+    this.sharedService.eraseOpinion(id, this.user._id, this.item._id);
   }
 
   opinionCheck(id: string) {
@@ -89,8 +127,8 @@ export class ItemComponent implements OnInit {
     this.authorRequested.emit(author);
   }
 
-  likeOpinion(id:string){
-    this.sharedService.likeOpinion(id,this.userId);
+  likeOpinion(id: string) {
+    this.sharedService.likeOpinion(id, this.user._id);
   }
 
 

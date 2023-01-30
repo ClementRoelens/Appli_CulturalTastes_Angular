@@ -1,5 +1,5 @@
 export class User {
-    _id?:string;
+    _id!:string;
     username!:string;
     likedFilmsId!:string[];
     dislikedFilmsId!:string[];

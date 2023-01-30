@@ -7,7 +7,7 @@ import { HttpClientModule } from '@angular/common/http';
 // import { RouterModule } from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
 import { SigninComponent } from './components/signin/signin.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SignupComponent } from './components/signup/signup.component';
 
 @NgModule({

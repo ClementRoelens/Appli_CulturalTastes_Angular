@@ -1,6 +1,8 @@
 export class Opinion {
-    _id?:string
+    _id!:string
     content!:string;
     likes!:number
-    author!:string;
+    authorName!:string;
+    authorId!:string;
+    itemType!:string;
 }

@@ -1,6 +1,6 @@
-<ng-container *ngIf="opinion$ | async as opinion">
+<ng-container *ngIf="selectedOpinion$ | async as opinion">
     <div id="opinion" *ngIf="opinion._id">
-        <h1>{{username$ | async}}</h1>
+        <h1>{{opinion.authorName}}</h1>
         <p>{{opinion.content}}</p>
         <div id="opinionIcons">
             <img src="../assets/arrow_left.png" alt="arrow_left" (click)="opinionSelection(-1)">

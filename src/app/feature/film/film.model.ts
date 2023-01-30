@@ -1,5 +1,5 @@
 export class Film {
-    _id?:string;
+    _id!:string;
     title!: string;
     // Pour faciliter la réutilisation de component, on utilise author pour désigner le réalisateur
     author!: string;

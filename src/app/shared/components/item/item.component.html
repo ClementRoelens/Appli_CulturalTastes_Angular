@@ -11,19 +11,21 @@
                 <div>{{item.dislikes}}</div>
             </div>
             <div id="opinionIcon">
-                <img (click)="addOpinion()" class="icons" src="./assets/note.png" alt="Avis">
+                <img (click)="modifyOrCreateOpinion()" class="icons" src="./assets/note.png" alt="Avis">
                 <div>{{item.opinionsId.length}}</div>
             </div>
         </div>
         <img id="poster" [src]="imageUrl" [alt]="item.title"> 
         <div id="opinionArea">
-            <app-opinion *ngIf="opinions$ | async as opinions"
+            <app-opinion *ngIf="item.opinionsId.length > 0"
+            [opinionsId]="item.opinionsId"
             (opinionLiked)="likeOpinion($event)"
+            (opinionExists)="opinionExists($event)"
             ></app-opinion>
         </div> 
     </div>
     <h2 id="director" (click)="getItems(item.author)">{{item.author}}</h2>
-    <h2 id="date">Sorti le {{item.date}}</h2>
+    <h2 id="date">Sorti le {{item.date | date: 'dd/MM/yyyy'}}</h2>
     
     <div id="description">
         <p>{{item.description}}</p>

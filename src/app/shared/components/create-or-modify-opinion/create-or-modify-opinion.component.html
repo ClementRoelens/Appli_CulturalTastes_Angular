@@ -1,0 +1,8 @@
+    <mat-dialog-content>
+        <h2 mat-dialog-title>Vous avez déjà laissé un avis sur ce film. Voulez-vous le modifier, ou le supprimer ?</h2>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+        <button mat-button (click)="close('modify')">Modifier</button>
+        <button mat-button (click)="close('erase')">Supprimer</button>
+        <button mat-button (click)="close('cancel')">Annuler</button>
+    </mat-dialog-actions>

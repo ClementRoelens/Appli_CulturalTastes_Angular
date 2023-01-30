@@ -1,4 +1,5 @@
-import { ReactiveFormsModule } from '@angular/forms';
+import { CreateOrModifyOpinionComponent } from './components/create-or-modify-opinion/create-or-modify-opinion.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NewOpinionComponent } from './components/new-opinion/new-opinion.component';
 import { OpinionService } from './opinion.service';
 import { SharedService } from './shared.service';
@@ -19,13 +20,15 @@ import { ItemListComponent } from './components/item-list/item-list.component';
     GenreListComponent,
     ItemListComponent,
     UserComponent,
-    ItemComponent
+    ItemComponent,
+    CreateOrModifyOpinionComponent
   ],
   imports: [
     CommonModule,
     MaterialModule,
     RouterModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule
   ],
   exports: [
     OpinionComponent,
@@ -34,6 +37,7 @@ import { ItemListComponent } from './components/item-list/item-list.component';
     ItemListComponent,
     UserComponent,
     ItemComponent,
+    CreateOrModifyOpinionComponent,
     MaterialModule,
     RouterModule
   ],

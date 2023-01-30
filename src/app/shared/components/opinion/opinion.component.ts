@@ -12,10 +12,12 @@ import { AuthService } from 'src/app/core/auth.service';
 })
 export class OpinionComponent implements OnInit {
 
-  opinion$!: Observable<Opinion>;
-  username$!: Observable<string>;
+  opinions$!:Observable<Opinion[]>;
+  selectedOpinion$!: Observable<Opinion>;
+  @Input() opinionsId!:string[];
 
   @Output() opinionLiked = new EventEmitter<string>();
+  @Output() opinionExists = new EventEmitter<Opinion | null>();
 
   isLiked!: boolean;
   likedOpinionIcon!: string;
@@ -25,14 +27,13 @@ export class OpinionComponent implements OnInit {
     private authService: AuthService) { }
 
   ngOnInit(): void {
-    this.opinion$ = this.opinionService.selectedOpinion$.pipe(
-      tap(opinion => this.username$ = this.authService.getUsername(opinion.author))
-    );
+    this.selectedOpinion$ = this.opinionService.selectedOpinion$;
+    this.opinions$ = this.opinionService.opinions$;
 
     const user = this.authService.user$;
     combineLatest([
       user,
-      this.opinion$
+      this.selectedOpinion$
     ]).pipe(
       tap(([user, opinion]) => {
         if (opinion._id && user._id) {
@@ -42,8 +43,17 @@ export class OpinionComponent implements OnInit {
           this.isLiked = false;
         }
         this.likedOpinionIcon = (this.isLiked) ? "./assets/full_heart.png" : "./assets/empty_heart.png";
+        if (user.opinionsId.includes(opinion._id)){
+          this.opinionExists.emit(opinion);
+        } else {
+          this.opinionExists.emit(null);
+        }
       })
     ).subscribe();
+  }
+
+  ngOnChanges(){
+    this.opinionService.getOpinions(this.opinionsId)
   }
 
   opinionSelection(action: number) {

@@ -36,27 +36,43 @@ export class SharedService {
             userId: userIdP,
             opinionId: opinionIdP
         };
-        this.http.put(`${environment.apiUrl}/shared/likeOpinion`, body).pipe(
+        this.http.put<Opinion>(`${environment.apiUrl}/shared/likeOpinion`, body).pipe(
             tap(() => this.authService.getUser(userIdP)),
-            tap(() => this.opinionService.selectOpinion(opinionIdP))
+            tap(opinion => {
+                this.opinionService.opinionUpdated(opinion)})
         ).subscribe();
     }
 
-    addOpinion(itemIdP: string, userIdP: string, contentP: string, itemTypeP:string){
+    addOpinion(itemIdP: string, userIdP: string, usernameP: string, contentP: string, itemTypeP: string) {
         const body = {
             itemId: itemIdP,
             userId: userIdP,
+            username: usernameP,
             content: contentP,
-            itemType:itemTypeP
-          };
-          this.http.post<{opinion:Opinion,film:Film,user:User}>(`${environment.apiUrl}/shared/addOneOpinion`,body).pipe(
-            tap(()=>this.authService.getUser(userIdP)),
-            tap(()=>this.filmService.getOneFilm(itemIdP)),
-            tap((res:{opinion:Opinion,film:Film,user:User}) => {
-                if (res.opinion._id){
-                    this.opinionService.getOneOpinion(res.opinion._id);
+            itemType: itemTypeP
+        };
+        this.http.post<Opinion>(`${environment.apiUrl}/shared/addOneOpinion`, body).pipe(
+            tap(() => this.authService.getUser(userIdP)),
+            tap(() => this.filmService.getOneFilm(itemIdP)),
+            tap((opinion: Opinion) => {
+                if (opinion._id) {
+                    this.opinionService.opinionUpdated(opinion)
                 }
             })
-          ).subscribe()
+        ).subscribe();
+    }
+
+    eraseOpinion(opinionId: string, userId: string, itemId: string) {
+        console.log("SharedService.eraseOpinion() lancé");
+        this.http.delete(`${environment.apiUrl}/shared/removeOpinion/${opinionId}/${userId}/${itemId}`)
+            .pipe(
+                tap(() => this.authService.getUser(userId)),
+                tap(() => this.filmService.getOneFilm(itemId)),
+                tap(() => this.opinionService.opinionRemoved(opinionId))
+            )
+            .subscribe(() => {
+                this.authService.getUser(userId);
+                this.filmService.getOneFilm(itemId);
+            });
     }
 }

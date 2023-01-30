@@ -36,7 +36,7 @@ export class SignupComponent implements OnInit {
           console.log('Erreur '+res.error);
         }
         else {
-          this.authService.signin(this.userForm.value.username,this.userForm.value.password);
+          this.authService.signup(this.userForm.value.username,this.userForm.value.password);
           let snackbarRef = this.snackbar.open('Votre compte a bien été créée', 'Fermer', {duration:2000})
           snackbarRef.afterDismissed().pipe(
             tap(()=>this.dialogRef.close())
