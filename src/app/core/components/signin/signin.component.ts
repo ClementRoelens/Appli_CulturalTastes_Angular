@@ -1,3 +1,4 @@
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { AuthService } from './../../auth.service';
 import { Component, OnInit } from '@angular/core';
@@ -16,7 +17,8 @@ export class SigninComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService,
-    private dialogRef:MatDialogRef<SigninComponent>
+    private dialogRef:MatDialogRef<SigninComponent>,
+    private snackbar:MatSnackBar
   ) { }
 
   ngOnInit(): void {
@@ -27,14 +29,19 @@ export class SigninComponent implements OnInit {
   }
 
   signin() {
-    this.authService.signin(this.userForm.value['username'], this.userForm.value['password']);
-    this.authService.logging$.pipe(
-      tap( logging => {
-        if (!logging){
-          this.dialogRef.close();
-        }
-      })
-    ).subscribe();
+    if (this.userForm.valid){
+      this.authService.signin(this.userForm.value['username'], this.userForm.value['password']);
+      this.authService.logging$.pipe(
+        tap( logging => {
+          if (!logging){
+            this.dialogRef.close();
+          }
+        })
+      ).subscribe();
+    } else {
+      this.snackbar.open("Remplissez les champs pour vous connecter");
+    }
+    
     
   }
 }
