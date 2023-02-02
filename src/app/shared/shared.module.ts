@@ -1,3 +1,4 @@
+import { SigninOrSignupComponent } from './signin-or-signup/signin-or-signup.component';
 import { CreateOrModifyOpinionComponent } from './components/create-or-modify-opinion/create-or-modify-opinion.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NewOpinionComponent } from './components/new-opinion/new-opinion.component';
@@ -21,7 +22,8 @@ import { ItemListComponent } from './components/item-list/item-list.component';
     ItemListComponent,
     UserComponent,
     ItemComponent,
-    CreateOrModifyOpinionComponent
+    CreateOrModifyOpinionComponent,
+    SigninOrSignupComponent
   ],
   imports: [
     CommonModule,
@@ -38,6 +40,7 @@ import { ItemListComponent } from './components/item-list/item-list.component';
     UserComponent,
     ItemComponent,
     CreateOrModifyOpinionComponent,
+    SigninOrSignupComponent,
     MaterialModule,
     RouterModule
   ],

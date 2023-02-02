@@ -1,3 +1,5 @@
+import { SignupComponent } from './../../../core/components/signup/signup.component';
+import { SigninOrSignupComponent } from './../../signin-or-signup/signin-or-signup.component';
 import { CreateOrModifyOpinionComponent } from './../create-or-modify-opinion/create-or-modify-opinion.component';
 import { NewOpinionComponent } from './../new-opinion/new-opinion.component';
 import { SharedService } from './../../shared.service';
@@ -65,10 +67,7 @@ export class ItemComponent implements OnInit {
   likeOrDislike(action: string) {
     if (this.item._id) {
       if (!this.isLogged) {
-        let snackBarRef = this.snackBar.open('Vous devez être connectés pour effectuer cette action', 'Se connecter', { duration: 4000 });
-        snackBarRef.onAction().subscribe(() => {
-          this.dialog.open(SigninComponent)
-        });
+       this.needLogin();
       }
       else {
         this.sharedService.likeOrDislikeItem(this.item._id, this.itemType, this.user._id, action);
@@ -77,18 +76,39 @@ export class ItemComponent implements OnInit {
   }
 
   modifyOrCreateOpinion() {
-    if (this.existingOpinion !== null && this.item.opinionsId.length > 0) {
-      let opinionId = this.existingOpinion._id;
-      let dialogRef = this.dialog.open(CreateOrModifyOpinionComponent, { width: '460px', height: '235px' });
-      dialogRef.afterClosed().subscribe(result => {
-        if (result == "modify") {
-          this.writeOpinion(false);
-        } else if (result == "erase") {
-          this.eraseOpinion(opinionId);
-        }
-      })
+    if (!this.isLogged){
+     this.needLogin();
     } else {
-      this.writeOpinion(true);
+      if (this.existingOpinion !== null && this.item.opinionsId.length > 0) {
+        let opinionId = this.existingOpinion._id;
+        let dialogRef = this.dialog.open(CreateOrModifyOpinionComponent, { width: '460px', height: '235px' });
+        dialogRef.afterClosed().subscribe(result => {
+          if (result == "modify") {
+            this.writeOpinion(false);
+          } else if (result == "erase") {
+            this.eraseOpinion(opinionId);
+          }
+        })
+      } else {
+        this.writeOpinion(true);
+      }
+    }
+  }
+
+  opinionCheck(id: string) {
+    this.isOpinionLiked = (this.likedOpinionsId.includes(id)) ? true : false;
+  }
+
+  getItems(author: string) {
+    this.authorRequested.emit(author);
+  }
+
+  likeOpinion(id: string) {
+    if (!this.isLogged) {
+     this.needLogin();
+    }
+    else {
+      this.sharedService.likeOpinion(id, this.user._id);
     }
   }
 
@@ -114,22 +134,23 @@ export class ItemComponent implements OnInit {
     });
   }
 
+  private needLogin(){
+    let dialogRef = this.dialog.open(SigninOrSignupComponent);
+    dialogRef.afterClosed().subscribe(result=>{
+      if (result == "signin"){
+        this.dialog.open(SigninComponent)
+      } else if (result == "signup") {
+        this.dialog.open(SignupComponent);
+      }
+    });
+    // let snackBarRef = this.snackBar.open('Vous devez être connectés pour effectuer cette action', 'Se connecter', { duration: 4000 });
+    // snackBarRef.onAction().subscribe(() => {
+    //   this.dialog.open(SigninComponent)
+    // });
+  }
+
   private eraseOpinion(id: string) {
     console.log("eraseOpinion(), appel du service");
     this.sharedService.eraseOpinion(id, this.user._id, this.item._id);
   }
-
-  opinionCheck(id: string) {
-    this.isOpinionLiked = (this.likedOpinionsId.includes(id)) ? true : false;
-  }
-
-  getItems(author: string) {
-    this.authorRequested.emit(author);
-  }
-
-  likeOpinion(id: string) {
-    this.sharedService.likeOpinion(id, this.user._id);
-  }
-
-
 }
