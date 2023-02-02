@@ -78,6 +78,10 @@ export class AuthService {
         ).subscribe();
     }
 
+    setUser(user:User){
+        this._user$.next(user);
+    }
+
     getUsername(id: string): Observable<string> {
         return this.http.get<User>(`${environment.apiUrl}/user/getOneUser/${id}`).pipe(
             map(user => user.username)

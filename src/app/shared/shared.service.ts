@@ -25,9 +25,11 @@ export class SharedService {
             userId: userIdP,
             action: actionP
         };
-        this.http.put(`${environment.apiUrl}/shared/likeOrDislikeItem`, body).pipe(
-            tap(() => this.authService.getUser(userIdP)),
-            tap(() => this.filmService.getOneFilm(itemIdP))
+        this.http.put<{user:User,film:Film}>(`${environment.apiUrl}/shared/likeOrDislikeItem`, body).pipe(
+            tap(({user,film}) =>{ 
+                this.authService.setUser(user);
+                this.filmService.setFilm(film);
+            })
         ).subscribe();
     }
 
@@ -36,10 +38,11 @@ export class SharedService {
             userId: userIdP,
             opinionId: opinionIdP
         };
-        this.http.put<Opinion>(`${environment.apiUrl}/shared/likeOpinion`, body).pipe(
-            tap(() => this.authService.getUser(userIdP)),
-            tap(opinion => {
-                this.opinionService.opinionUpdated(opinion)})
+        this.http.put<{opinion:Opinion,user:User}>(`${environment.apiUrl}/shared/likeOpinion`, body).pipe(
+            tap(({opinion,user}) => {
+                this.opinionService.opinionUpdated(opinion);
+                this.authService.setUser(user)
+            })
         ).subscribe();
     }
 
@@ -51,13 +54,11 @@ export class SharedService {
             content: contentP,
             itemType: itemTypeP
         };
-        this.http.post<Opinion>(`${environment.apiUrl}/shared/addOneOpinion`, body).pipe(
-            tap(() => this.authService.getUser(userIdP)),
-            tap(() => this.filmService.getOneFilm(itemIdP)),
-            tap((opinion: Opinion) => {
-                if (opinion._id) {
-                    this.opinionService.opinionUpdated(opinion)
-                }
+        this.http.post<{film:Film,user:User,opinion:Opinion}>(`${environment.apiUrl}/shared/addOneOpinion`, body).pipe(
+            tap(({film,user,opinion}) =>{
+               this.filmService.setFilm(film);
+               this.authService.setUser(user);
+               this.opinionService.opinionUpdated(opinion);
             })
         ).subscribe();
     }

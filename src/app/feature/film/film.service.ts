@@ -31,20 +31,17 @@ export class FilmService {
     get loadingFilms$(): Observable<boolean> {
         return this._loadingFilms$;
     }
+    private _loadingOneFilm$ = new BehaviorSubject<boolean>(false);
+    get loadingOneFilm$() : Observable<boolean>{
+        return this._loadingOneFilm$;
+    }
     private _loadingGenres$ = new BehaviorSubject<boolean>(false);
     get loadingGenres$(): Observable<boolean> {
         return this._loadingGenres$;
     }
 
-    private setLoadingFilmsStatus(loading: boolean) {
-        this._loadingFilms$.next(loading);
-    }
-    private setLoadingGenresStatus(loading: boolean) {
-        this._loadingGenres$.next(loading);
-    }
-
     getFilms(getOneRandom: boolean, urlP?: string) {
-        this.setLoadingFilmsStatus(true);
+        this._loadingFilms$.next(true);
         let url = `${environment.apiUrl}/film/`;
         if (urlP) {
             url += urlP;
@@ -60,7 +57,7 @@ export class FilmService {
                     this._selectedFilm$.next(films[rand]);
                 }
             }),
-            tap(() => this.setLoadingFilmsStatus(false))
+            tap(() => this._loadingFilms$.next(false))
         ).subscribe();
     }
 
@@ -72,19 +69,24 @@ export class FilmService {
         this.getFilms(true, `getRandomInOneGenre/${genre}`);
     }
 
-    getOneFilm(id?: string) {
-        if (id) {
+    getOneFilm(id: string) {
+            this._loadingOneFilm$.next(true);
             this.http.get<Film>(`${environment.apiUrl}/film/getOneFilm/${id}`).pipe(
-                tap(film => this._selectedFilm$.next(film))
+                tap(film => this._selectedFilm$.next(film)),
+                tap(()=> this._loadingOneFilm$.next(false))
             ).subscribe();
-        }
+        
+    }
+
+    setFilm(film:Film){
+        this._selectedFilm$.next(film);
     }
 
     getGenres() {
-        this.setLoadingGenresStatus(true);
+        this._loadingGenres$.next(true);
         this.http.get<string[]>(`${environment.apiUrl}/film/getGenres`).pipe(
             tap(genres => this._genres$.next(genres)),
-            tap(() => this.setLoadingGenresStatus(false))
+            tap(() => this._loadingGenres$.next(false))
         ).subscribe();
     }
 }

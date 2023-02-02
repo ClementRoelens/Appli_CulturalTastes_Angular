@@ -55,10 +55,10 @@ export class FilmComponent implements OnInit {
   }
 
   private initFilmObservables() {
-    this.filmService.films$.pipe(
-      take(1),
-      tap(() => this.getOneFilm(this.seekedId))
-    ).subscribe();
+    // this.filmService.films$.pipe(
+    //   take(1),
+    //   tap(() => this.getOneFilm(this.seekedId))
+    // ).subscribe();
 
     this.films$ = this.filmService.films$;
     this.selectedFilm$ = this.filmService.selectedFilm$;
