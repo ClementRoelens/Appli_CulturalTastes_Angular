@@ -5,9 +5,9 @@
 export const environment = {
   production: false,
   // Dev
-  // apiUrl:"https://localhost:7068",
+  apiUrl:"https://localhost:7068",
   // Une fois déployé
-  apiUrl:"https://culturaltastesapi.azurewebsites.net",
+  // apiUrl:"https://culturaltastesapi.azurewebsites.net",
   imageStorageUrl:"https://culturaltastesstockage.blob.core.windows.net"
 };
 

@@ -1,9 +1,9 @@
 <mat-card [formGroup]="userForm">
     <mat-form-field>
-        <input matInput placeholder="Pseudo" type="text" formControlName="username">
+        <input matInput placeholder="Pseudo" type="text" formControlName="username" (keydown.Enter)="signin()">
     </mat-form-field>
     <mat-form-field>
-        <input matInput placeholder="Mot de passe" type="password" formControlName="password">
+        <input matInput placeholder="Mot de passe" type="password" formControlName="password" (keydown.Enter)="signin()">
     </mat-form-field>
 </mat-card>
 <mat-card-actions>

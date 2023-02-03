@@ -7,7 +7,7 @@ import { OpinionService } from './../../opinion.service';
 import { Opinion } from './../../models/opinion.model';
 import { environment } from './../../../../environments/environment';
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Film } from 'src/app/feature/film/film.model';
 import { Game } from 'src/app/feature/game/game.model';
 import { Album } from 'src/app/feature/music/album.model';
@@ -41,10 +41,9 @@ export class ItemComponent implements OnInit {
   @Output() authorRequested = new EventEmitter<string>();
 
   constructor(
-    private opinionService: OpinionService,
     private sharedService: SharedService,
-    private snackBar: MatSnackBar,
     private dialog: MatDialog,
+    private router:Router
   ) { }
 
   ngOnInit(): void {
@@ -83,9 +82,9 @@ export class ItemComponent implements OnInit {
         let opinionId = this.existingOpinion._id;
         let dialogRef = this.dialog.open(CreateOrModifyOpinionComponent, { width: '460px', height: '235px' });
         dialogRef.afterClosed().subscribe(result => {
-          if (result == "modify") {
+          if (result === "modify") {
             this.writeOpinion(false);
-          } else if (result == "erase") {
+          } else if (result === "erase") {
             this.eraseOpinion(opinionId);
           }
         })
@@ -137,16 +136,12 @@ export class ItemComponent implements OnInit {
   private needLogin(){
     let dialogRef = this.dialog.open(SigninOrSignupComponent);
     dialogRef.afterClosed().subscribe(result=>{
-      if (result == "signin"){
+      if (result === "signin"){
         this.dialog.open(SigninComponent)
-      } else if (result == "signup") {
+      } else if (result === "signup") {
         this.dialog.open(SignupComponent);
       }
     });
-    // let snackBarRef = this.snackBar.open('Vous devez être connectés pour effectuer cette action', 'Se connecter', { duration: 4000 });
-    // snackBarRef.onAction().subscribe(() => {
-    //   this.dialog.open(SigninComponent)
-    // });
   }
 
   private eraseOpinion(id: string) {

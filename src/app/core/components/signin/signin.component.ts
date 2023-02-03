@@ -39,7 +39,7 @@ export class SigninComponent implements OnInit {
         })
       ).subscribe();
     } else {
-      this.snackbar.open("Remplissez les champs pour vous connecter");
+      this.snackbar.open("Remplissez les champs pour vous connecter",undefined,{duration:1500});
     }
     
     

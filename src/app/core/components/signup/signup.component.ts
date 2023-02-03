@@ -45,7 +45,7 @@ export class SignupComponent implements OnInit {
         })
       ).subscribe();
     } else {
-      this.snackbar.open("Remplissez les champs pour vous connecter");
+      this.snackbar.open("Remplissez les champs pour vous connecter",undefined,{duration:1500,verticalPosition:"top"});
     }
   
   }
