@@ -1,44 +1,89 @@
-#center>* {
+#center > * {
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 33%;
-    margin: auto;
-    position: relative;
+    margin: auto; @media(min-width:900px) {
+        position: relative;
+    }
 }
 
 #center {
-    /* width: 250px; */
     margin: auto;
     position: relative;
-    display:flex;
-    justify-content: space-around;
+    display: flex;
+
+    @media(max-width:900px) and (orientation:portrait) {
+        flex-direction: column;
+    }
+
+    @media(min-width:900px) {
+        justify-content: space-around;
+    }
 }
 
 h1 {
+    @media(max-width:900px) and (orientation:portrait) {
+        font-size: 2em;
+        max-width:80%;
+        margin:20px auto 10px auto;
+    }
+
+    @media(min-width:900px) {
+        font-size: 3.5em;
+        margin: 0 auto 25px auto;
+    }
+
     font-weight: 100;
-    font-size: 3.5em;
-    margin: 0 auto 25px auto;
 }
 
 h2 {
     font-weight: normal;
     margin-top: 0;
+    @media (max-width:900px) and (orientation:portrait){
+        margin-bottom:5px;
+    }
 }
 
-h1,
-h2 {
+h1,h2 {
     text-align: center;
+    
 }
 
 #opinions_and_likes {
+    @media (max-width:900px) and (orientation:portrait) {
+        display: flex;
+        flex-direction: row !important;
+        justify-content:space-between;
+        width:130px !important;
+        order:1;
+        margin-bottom:10px !important;
+    }
     align-items:end !important;
     right:30px;
     text-align: center;
 }
 
-#opinions_and_likes>* {
+ @media (max-width:900px) and (orientation:portrait){
+    #opinions_and_likes :nth-child(1){
+        order:1;
+    }
+    #opinions_and_likes :nth-child(2){
+        order:3;
+    }
+    #opinions_and_likes :nth-child(3){
+        order:2;
+    }
+ }
+
+#opinions_and_likes > * {
     margin-top: 25px;
+}
+
+@media(max-width:900px) and (orientation:portrait){
+    #opinions_and_likes > * > div {
+        margin-top: 0;
+    }
 }
 
 #opinions_and_likes>*>* {
@@ -46,13 +91,27 @@ h2 {
 }
 
 #poster {
-    margin-top: 30px !important;
-    margin-bottom: 25px !important;
-    width: 250px !important;
+    @media(max-width:900px) and (orientation:portrait) {
+        width: 150px !important;
+        margin-top:10px !important;
+    }
+
+    @media(min-width:900px) {
+        width: 250px !important;
+        margin-top: 30px !important;
+        margin-bottom: 25px !important;
+    }
+    order:0;
 }
 
 #director {
-    font-size: 1.7em;
+    @media(max-width:900px) and (orientation:portrait) {
+        font-size: 1.3em; 
+    }
+
+    @media(min-width:900px) {
+        font-size: 1.7em; 
+    }
 }
 
 #director:hover {
@@ -61,15 +120,26 @@ h2 {
 }
 
 #date {
-    font-size: 1.4em;
+    @media(min-width:900px){
+        font-size: 1.4em;
+    }
+    @media(max-width:900px) and (orientation:portrait) {
+        font-size: 1em; 
+    }
 }
 
 #description {
-    width: 80%;
+    width: 90%;
     margin: auto;
-    margin-top: 30px;
     border: 1px white solid;
     border-radius: 5px;
     padding: 15px;
     text-align: center;
+    @media(min-width:900px) {
+        margin-top: 30px;
+    }
+    @media(max-width:900px) and (orientation:portrait) {
+        padding-top:5px;
+        font-size:0.8em;
+    }
 }

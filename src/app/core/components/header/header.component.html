@@ -1,11 +1,10 @@
 <mat-toolbar color="primary">
-    <div id="signin">
-        <button mat-raised-button *ngIf="!(isLogged$ | async)" (click)="signin()">Connexion</button>
-        <button mat-raised-button *ngIf="isLogged$ | async" (click)="signout()">Déconnexion</button>
-    </div>
-    <h2>Bonjour <span *ngIf="user$ | async as user">{{user.username}}</span><span *ngIf="!(user$ | async)">visiteur</span>!</h2>
+    <button mat-raised-button *ngIf="!(isLogged$ | async)" (click)="signin()">Connexion</button>
+    <button mat-raised-button *ngIf="isLogged$ | async" (click)="signout()">Déconnexion</button>
+    <h2>Bonjour <span *ngIf="user$ | async as user">{{user.username}}</span><span
+            *ngIf="!(user$ | async)">visiteur</span></h2>
     <div id="account_right">
-        <button mat-raised-button *ngIf="!(isLogged$ | async)" (click)="signup()" >Inscription</button>
+        <button mat-raised-button *ngIf="!(isLogged$ | async)" (click)="signup()">Inscription</button>
         <ng-container *ngIf="isLogged$ | async">
             <div id="infos" *ngIf="user$ | async as user">
                 <div>

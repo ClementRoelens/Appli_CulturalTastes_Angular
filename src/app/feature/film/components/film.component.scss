@@ -29,7 +29,14 @@ app-item-list {
 }
 
 app-item {
-    width:60%;
-    padding-top:70px;
+    @media(max-width:900px ) and (orientation:portrait) {
+        
+    }
+    @media(min-width:900px ) {
+        width:60%;
+        padding-top:70px;
+    }
+    
+    
     // background-color: rgb(200, 204, 220);
 }

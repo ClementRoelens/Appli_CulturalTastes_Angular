@@ -1,25 +1,27 @@
 mat-toolbar {
     display:flex;
-    justify-content: space-around;
-    height:70px;
-    // align-items: center;
-}
-
-#signin {
-    display: flex;
     justify-content: space-between;
+    height:70px;
 }
 
-// button {
-//     margin: auto;
-//     border-radius: 30px;
-//     height: 45px;
-//     width: 110px;
-//     padding: 0;
-// }
+@media (max-width:900px) and (orientation:portrait){
+    // mat-toolbar > * {
+    //     width:33%;
+    // }
+    button{
+        padding:0 10px;
+        font-size:0.6em;
+    }
+}
 
 #infos {
-    font-size: 0.6em;
+    @media (max-width:900px) and (orientation:portrait) {
+        font-size:0.5em;
+        text-align:right;
+    }
+    @media (min-width:900px)  {
+        font-size: 0.6em;
+    }
     font-weight: normal;
 }
 
@@ -34,8 +36,18 @@ h2 {
     font-size: 2.1em;
     font-weight: normal;
     vertical-align: middle;
+    @media (max-width:900px) and (orientation:portrait) {
+        display:flex;
+        flex-direction:column;
+        font-size:1.1em;
+    }
 }
 
 #account_right {
-    width: 110px;
+    display:grid;
+    // width: 110px;
+}
+
+#account_right *{
+    justify-self:end;
 }

@@ -2,7 +2,7 @@ import { OpinionService } from './../../../shared/opinion.service';
 import { ActivatedRoute, TitleStrategy } from '@angular/router';
 import { SharedService } from './../../../shared/shared.service';
 import { AuthService } from './../../../core/auth.service';
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostBinding, HostListener, OnInit } from '@angular/core';
 import { combineLatest, map, Observable, take, tap } from 'rxjs';
 import { User } from 'src/app/shared/models/user.model';
 import { Film } from '../film.model';
@@ -16,6 +16,8 @@ import { FilmService } from '../film.service';
 })
 export class FilmComponent implements OnInit {
 
+  @HostBinding('class') class!: string;
+  
   user$!: Observable<User>;
   films$!: Observable<Film[]>;
   selectedFilm$!: Observable<Film>;
@@ -38,6 +40,7 @@ export class FilmComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.checkWidth(window.innerWidth);
     this.itemType='film'
     this.seekedId = this.route.snapshot.params['id'];
     this.initUserObservables();
@@ -47,6 +50,19 @@ export class FilmComponent implements OnInit {
     this.initLikedAndDislikedObservable();
     this.filmService.getGenres();
     this.filmService.getFilms(this.seekedId === undefined);
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    this.checkWidth(event.target.innerWidth);
+  }
+
+  checkWidth(width: number) {
+    if (width <= 900) {
+      this.class = 'mobile-only';
+    } else {
+      this.class = 'desktop-only';
+    }
   }
 
   private initUserObservables() {

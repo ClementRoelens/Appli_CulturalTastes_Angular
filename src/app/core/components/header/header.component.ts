@@ -10,17 +10,16 @@ import { MatDialog } from '@angular/material/dialog';
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
-  changeDetection:ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HeaderComponent implements OnInit {
-
-  user$!:Observable<User>;
-  isLogged$!:Observable<boolean>;
+  user$!: Observable<User>;
+  isLogged$!: Observable<boolean>;
 
   constructor(
-    private authService:AuthService,
-    public dialog:MatDialog
-    ) { }
+    private authService: AuthService,
+    public dialog: MatDialog
+  ) { }
 
   ngOnInit(): void {
     this.authService.getStoredJwtUser();
@@ -28,21 +27,21 @@ export class HeaderComponent implements OnInit {
     this.isLogged$ = this.authService.isLogged$;
   }
 
-  signup(){
+  signup() {
     let signupRef = this.dialog.open(SignupComponent);
     signupRef.afterClosed().pipe(
-      tap(()=>window.location.reload())
+      tap(() => window.location.reload())
     ).subscribe();
   }
 
-  signin(){
+  signin() {
     let signinRef = this.dialog.open(SigninComponent);
     signinRef.afterClosed().pipe(
-      tap(()=>window.location.reload())
+      tap(() => window.location.reload())
     ).subscribe()
   }
 
-  signout(){
+  signout() {
     this.authService.signout();
   }
 }

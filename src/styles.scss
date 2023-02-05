@@ -29,9 +29,14 @@ li:hover {
 }
 
 #opinions_and_likes .icons,
-#opinionIcons img {
-    width: 30px;
-    cursor: pointer;
+#opinionIcons img{
+    @media (max-width:900px) and (orientation:portrait){
+        width:25px;
+    }
+    @media (min-width:900px){
+        width: 30px;
+        cursor: pointer;
+    }
 }
 
 h1 {

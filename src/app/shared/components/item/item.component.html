@@ -17,7 +17,7 @@
         </div>
         <img id="poster" [src]="imageUrl" [alt]="item.title"> 
         <div id="opinionArea">
-            <app-opinion *ngIf="item.opinionsId.length > 0"
+            <app-opinion *ngIf="item.opinionsId.length > 0 && class === 'desktop-only'"
             [opinionsId]="item.opinionsId"
             (opinionLiked)="likeOpinion($event)"
             (opinionExists)="opinionExists($event)"

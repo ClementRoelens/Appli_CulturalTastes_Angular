@@ -31,6 +31,7 @@ export class ItemComponent implements OnInit {
   @Input() likedOpinionsId!: string[];
   @Input() user!: User;
   @Input() isLogged!: boolean;
+  @Input() class!:string;
 
   likedIcon!: string;
   dislikedIcon!: string;
