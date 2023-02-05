@@ -1,3 +1,4 @@
+import { FilmService } from './../../../feature/film/film.service';
 import { SignupComponent } from './../../../core/components/signup/signup.component';
 import { SigninOrSignupComponent } from './../../signin-or-signup/signin-or-signup.component';
 import { CreateOrModifyOpinionComponent } from './../create-or-modify-opinion/create-or-modify-opinion.component';
@@ -34,16 +35,18 @@ export class ItemComponent implements OnInit {
 
   likedIcon!: string;
   dislikedIcon!: string;
-  imageUrl!: string;
+  // imageUrl!: string;
   isOpinionLiked!: boolean;
   existingOpinion!: Opinion | null;
+  
+  imageUrl$!:Observable<string>;
 
   @Output() authorRequested = new EventEmitter<string>();
 
   constructor(
     private sharedService: SharedService,
-    private dialog: MatDialog,
-    private router:Router
+    private filmService:FilmService,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -54,7 +57,8 @@ export class ItemComponent implements OnInit {
     // Pour le dev
     // this.imageUrl = `${environment.apiUrl}/film/${this.item.imageUrl}`;
     // Une fois déployé sur Azure
-    this.imageUrl = `${environment.imageStorageUrl}/${this.item.imageUrl}`;
+    // this.imageUrl = `${environment.imageStorageUrl}/${this.item.imageUrl}`;
+    this.imageUrl$ = this.filmService.image$;
     this.likedIcon = this.isLikedOrDisliked.liked ? "./assets/thumbup_done.png" : "./assets/thumbup.png";
     this.dislikedIcon = this.isLikedOrDisliked.disliked ? "./assets/thumbdown_done.png" : "./assets/thumbdown.png";
   }

@@ -15,7 +15,7 @@
                 <div>{{item.opinionsId.length}}</div>
             </div>
         </div>
-        <img id="poster" [src]="imageUrl" [alt]="item.title"> 
+        <img id="poster" [src]="imageUrl$ | async" [alt]="item.title" loading="eager"> 
         <div id="opinionArea">
             <app-opinion *ngIf="item.opinionsId.length > 0"
             [opinionsId]="item.opinionsId"

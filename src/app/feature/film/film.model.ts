@@ -10,4 +10,5 @@ export class Film {
     opinionsId!: string[];
     genres!: string[];
     imageUrl!: string
+    // image!:Blob
 }

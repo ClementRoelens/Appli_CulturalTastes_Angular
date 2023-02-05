@@ -1,8 +1,8 @@
+import { environment } from './../../../environments/environment';
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { BehaviorSubject, Observable, ReplaySubject, tap } from "rxjs";
 import { Film } from "./film.model";
-import { environment } from "src/environments/environment";
 
 // const anonymousFilm: Film = new Film;
 // const anonymouseFilmList : Film[] = new [anonymousFilm];
@@ -21,7 +21,10 @@ export class FilmService {
     get selectedFilm$(): Observable<Film> {
         return this._selectedFilm$;
     }
-
+    private _image$ = new ReplaySubject<string>();
+    get image$(): Observable<string> {
+        return this._image$;
+    }
     private _genres$ = new BehaviorSubject<string[]>([]);
     get genres$(): Observable<string[]> {
         return this._genres$;
@@ -32,7 +35,7 @@ export class FilmService {
         return this._loadingFilms$;
     }
     private _loadingOneFilm$ = new BehaviorSubject<boolean>(false);
-    get loadingOneFilm$() : Observable<boolean>{
+    get loadingOneFilm$(): Observable<boolean> {
         return this._loadingOneFilm$;
     }
     private _loadingGenres$ = new BehaviorSubject<boolean>(false);
@@ -54,7 +57,9 @@ export class FilmService {
                 this._films$.next(films);
                 if (getOneRandom) {
                     const rand = Math.round(Math.random() * (films.length - 1));
-                    this._selectedFilm$.next(films[rand]);
+                    const film = films[rand];
+                    this._image$.next(environment.imageStorageUrl+"/"+film.imageUrl);
+                    this._selectedFilm$.next(film);
                 }
             }),
             tap(() => this._loadingFilms$.next(false))
@@ -70,15 +75,22 @@ export class FilmService {
     }
 
     getOneFilm(id: string) {
-            this._loadingOneFilm$.next(true);
-            this.http.get<Film>(`${environment.apiUrl}/film/getOneFilm/${id}`).pipe(
-                tap(film => this._selectedFilm$.next(film)),
-                tap(()=> this._loadingOneFilm$.next(false))
-            ).subscribe();
-        
+        this._loadingOneFilm$.next(true);
+        this.http.get<Film>(`${environment.apiUrl}/film/getOneFilm/${id}`).pipe(
+            tap(film => {
+                this._image$.next(environment.imageStorageUrl+"/"+film.imageUrl);
+                this._selectedFilm$.next(film);
+                this._loadingOneFilm$.next(false)
+            })
+        ).subscribe();
+
     }
 
-    setFilm(film:Film){
+    private getImage(url: string) {
+        return this.http.get<HTMLImageElement>(`${environment.imageStorageUrl}/${url}`);
+    }
+
+    setFilm(film: Film) {
         this._selectedFilm$.next(film);
     }
 
