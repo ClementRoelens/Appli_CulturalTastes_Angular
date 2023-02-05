@@ -68,22 +68,22 @@ export class OpinionComponent implements OnInit {
 
   ngOnChanges() {
     // L'avis sélectionné bougeait tout seul quand on likait un film, ce paragrape empêche ce comportement
-    let newOpinions = true;
-    if (this.lastOpinionsId !== undefined){
-      newOpinions = false;
-      let i = 0;
-      let c = this.lastOpinionsId.length;
-      while (!newOpinions && i<c){
-        if (this.lastOpinionsId[i] !== this.opinionsId[i]){
-          newOpinions = true;
-        }
-        i++;
-      }
-    }
-    if (newOpinions){
-      this.lastOpinionsId = this.opinionsId;
-      this.opinionService.getOpinions(this.opinionsId);
-    }
+    // let newOpinions = true;
+    // if (this.lastOpinionsId !== undefined){
+    //   newOpinions = false;
+    //   let i = 0;
+    //   let c = this.lastOpinionsId.length;
+    //   while (!newOpinions && i<c){
+    //     if (this.lastOpinionsId[i] !== this.opinionsId[i]){
+    //       newOpinions = true;
+    //     }
+    //     i++;
+    //   }
+    // }
+    // if (newOpinions){
+    //   this.lastOpinionsId = this.opinionsId;
+    //   this.opinionService.getOpinions(this.opinionsId);
+    // }
   }
 
   opinionSelection(action: number) {

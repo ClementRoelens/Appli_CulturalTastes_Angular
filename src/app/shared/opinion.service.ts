@@ -25,6 +25,7 @@ export class OpinionService {
 
     getOpinions(opinionsId: string[]) {
         console.log("OpinionService.getOpinions()")
+        this._selectedOpinion$.next(anonymousOpinion);
         if (opinionsId.length !== 0){
             let opinions: Opinion[] = [];
             if (opinionsId.length > 0) {
@@ -46,10 +47,7 @@ export class OpinionService {
             } else {
                 this._opinions$.next(opinions);
             }
-        } else {
-            this._selectedOpinion$.next(anonymousOpinion);
-        }
-        
+        } 
     }
 
     sortOpinions(opinions:Opinion[]) {

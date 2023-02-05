@@ -1,3 +1,4 @@
+import { OpinionService } from './../../../shared/opinion.service';
 import { ActivatedRoute, TitleStrategy } from '@angular/router';
 import { SharedService } from './../../../shared/shared.service';
 import { AuthService } from './../../../core/auth.service';
@@ -32,6 +33,7 @@ export class FilmComponent implements OnInit {
   constructor(
     private filmService: FilmService,
     private authService: AuthService,
+    private opinionService : OpinionService,
     private route: ActivatedRoute
   ) { }
 
@@ -40,6 +42,7 @@ export class FilmComponent implements OnInit {
     this.seekedId = this.route.snapshot.params['id'];
     this.initUserObservables();
     this.initFilmObservables();
+    this.initOpinionObservables();
     this.initGenreObservables();
     this.initLikedAndDislikedObservable();
     this.filmService.getGenres();
@@ -55,11 +58,6 @@ export class FilmComponent implements OnInit {
   }
 
   private initFilmObservables() {
-    // this.filmService.films$.pipe(
-    //   take(1),
-    //   tap(() => this.getOneFilm(this.seekedId))
-    // ).subscribe();
-
     this.films$ = this.filmService.films$;
     this.selectedFilm$ = this.filmService.selectedFilm$;
 
@@ -71,6 +69,12 @@ export class FilmComponent implements OnInit {
     ]).pipe(
       map(([loadingFilms, loadingGenres]) => loadingFilms || loadingGenres)
     );
+  }
+
+  private initOpinionObservables(){
+    this.selectedFilm$.pipe(
+      tap(film => this.opinionService.getOpinions(film.opinionsId))
+    ).subscribe();
   }
 
   private initGenreObservables() {
