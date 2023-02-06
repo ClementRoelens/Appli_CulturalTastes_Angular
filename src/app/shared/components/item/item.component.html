@@ -11,13 +11,13 @@
                 <div>{{item.dislikes}}</div>
             </div>
             <div id="opinionIcon">
-                <img (click)="modifyOrCreateOpinion()" class="icons" src="./assets/note.png" alt="Avis">
+                <img class="icons" src="./assets/note.png" alt="Avis" (click)="opinionClick()">
                 <div>{{item.opinionsId.length}}</div>
             </div>
         </div>
         <img id="poster" [src]="imageUrl" [alt]="item.title"> 
         <div id="opinionArea">
-            <app-opinion *ngIf="item.opinionsId.length > 0 && class === 'desktop-only'"
+            <app-opinion *ngIf="item.opinionsId.length > 0 && device === 'desktop-only'"
             [opinionsId]="item.opinionsId"
             (opinionLiked)="likeOpinion($event)"
             (opinionExists)="opinionExists($event)"

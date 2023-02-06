@@ -13,6 +13,7 @@ import * as Hammer from 'hammerjs';
 import {
 HammerModule, HammerGestureConfig, HAMMER_GESTURE_CONFIG} 
 from '@angular/platform-browser';
+import { SwipeToolTipComponentComponent } from './components/swipe-tool-tip-component/swipe-tool-tip-component.component';
 
 @Injectable()
 export class MyHammerConfig extends HammerGestureConfig {
@@ -25,7 +26,8 @@ export class MyHammerConfig extends HammerGestureConfig {
   declarations: [
     HeaderComponent,
     SigninComponent,
-    SignupComponent
+    SignupComponent,
+    SwipeToolTipComponentComponent
   ],
   imports: [
     CommonModule,

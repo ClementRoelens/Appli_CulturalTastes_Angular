@@ -1,6 +1,6 @@
 import { OpinionService } from './../../opinion.service';
 import { Observable, combineLatest, map, tap, switchMap } from 'rxjs';
-import { Component, Input, OnInit, EventEmitter, Output, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, OnInit, EventEmitter, Output, ChangeDetectionStrategy, HostBinding, HostListener } from '@angular/core';
 import { Opinion } from '../../models/opinion.model';
 import { AuthService } from 'src/app/core/auth.service';
 
@@ -12,6 +12,8 @@ import { AuthService } from 'src/app/core/auth.service';
 })
 export class OpinionComponent implements OnInit {
 
+  @HostBinding('device') device!: string;
+
   opinions$!: Observable<Opinion[]>;
   selectedOpinion$!: Observable<Opinion>;
 
@@ -19,6 +21,7 @@ export class OpinionComponent implements OnInit {
 
   @Output() opinionLiked = new EventEmitter<string>();
   @Output() opinionExists = new EventEmitter<Opinion | null>();
+  @Output() opinionWrited = new EventEmitter<boolean>();
 
   lastOpinionsId!: string[];
   isLiked!: boolean;
@@ -29,15 +32,33 @@ export class OpinionComponent implements OnInit {
     private authService: AuthService) { }
 
   ngOnInit(): void {
+    this.checkWidth(window.innerWidth);
     this.selectedOpinion$ = this.opinionService.selectedOpinion$;
     this.opinions$ = this.opinionService.opinions$;
+    this.createObservables();
+  }
 
-    this.opinionService.opinions$.pipe(
-      tap(opinions => {
+  ngOnChanges() {
+    // L'avis sélectionné bougeait tout seul quand on likait un film, ce paragrape empêche ce comportement
+    // let newOpinions = true;
+    // if (this.lastOpinionsId !== undefined){
+    //   newOpinions = false;
+    //   let i = 0;
+    //   let c = this.lastOpinionsId.length;
+    //   while (!newOpinions && i<c){
+    //     if (this.lastOpinionsId[i] !== this.opinionsId[i]){
+    //       newOpinions = true;
+    //     }
+    //     i++;
+    //   }
+    // }
+    // if (newOpinions){
+    //   this.lastOpinionsId = this.opinionsId;
+    //   this.opinionService.getOpinions(this.opinionsId);
+    // }
+  }
 
-      })
-    ).subscribe();
-
+  private createObservables(){
     const user = this.authService.user$;
     combineLatest([
       user,
@@ -61,36 +82,33 @@ export class OpinionComponent implements OnInit {
           this.opinionExists.emit(opinionToSend);
         }
         this.likedOpinionIcon = (this.isLiked) ? "./assets/full_heart.png" : "./assets/empty_heart.png";
-        
       })
     ).subscribe();
-  }
-
-  ngOnChanges() {
-    // L'avis sélectionné bougeait tout seul quand on likait un film, ce paragrape empêche ce comportement
-    // let newOpinions = true;
-    // if (this.lastOpinionsId !== undefined){
-    //   newOpinions = false;
-    //   let i = 0;
-    //   let c = this.lastOpinionsId.length;
-    //   while (!newOpinions && i<c){
-    //     if (this.lastOpinionsId[i] !== this.opinionsId[i]){
-    //       newOpinions = true;
-    //     }
-    //     i++;
-    //   }
-    // }
-    // if (newOpinions){
-    //   this.lastOpinionsId = this.opinionsId;
-    //   this.opinionService.getOpinions(this.opinionsId);
-    // }
   }
 
   opinionSelection(action: number) {
     this.opinionService.indexChange(action);
   }
 
+  checkWidth(width: number) {
+    if (width <= 900) {
+      this.device = 'mobile-only';
+    } else {
+      this.device = 'desktop-only';
+    }
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    this.checkWidth(event.target.innerWidth);
+  }
+  
   likeOpinion(id: string) {
+    console.log("likeOpinion lancé");
     this.opinionLiked.emit(id);
+  }
+
+  writeOpinion(){
+    this.opinionWrited.emit(true);
   }
 }

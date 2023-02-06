@@ -1,6 +1,7 @@
+import { SwipeToolTipComponentComponent } from './../../../core/components/swipe-tool-tip-component/swipe-tool-tip-component.component';
+import { MatDialog } from '@angular/material/dialog';
 import { OpinionService } from './../../../shared/opinion.service';
-import { ActivatedRoute, TitleStrategy } from '@angular/router';
-import { SharedService } from './../../../shared/shared.service';
+import { ActivatedRoute } from '@angular/router';
 import { AuthService } from './../../../core/auth.service';
 import { ChangeDetectionStrategy, Component, HostBinding, HostListener, OnInit, ViewChild } from '@angular/core';
 import { combineLatest, map, Observable, take, tap } from 'rxjs';
@@ -17,7 +18,7 @@ import { MatSidenav } from '@angular/material/sidenav';
 })
 export class FilmComponent implements OnInit {
 
-  @HostBinding('class') class!: string;
+  @HostBinding('device') device!: string;
   @ViewChild('snavLeft') sidebarLeft!: MatSidenav;
   @ViewChild('snavRight') sidebarRight!: MatSidenav;
 
@@ -39,7 +40,8 @@ export class FilmComponent implements OnInit {
     private filmService: FilmService,
     private authService: AuthService,
     private opinionService : OpinionService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private dialog:MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -53,6 +55,7 @@ export class FilmComponent implements OnInit {
     this.initLikedAndDislikedObservable();
     this.filmService.getGenres();
     this.filmService.getFilms(this.seekedId === undefined);
+    this.swipeTooltip();
   }
 
   @HostListener('window:resize', ['$event'])
@@ -62,9 +65,9 @@ export class FilmComponent implements OnInit {
 
   checkWidth(width: number) {
     if (width <= 900) {
-      this.class = 'mobile-only';
+      this.device = 'mobile-only';
     } else {
-      this.class = 'desktop-only';
+      this.device = 'desktop-only';
     }
   }
 
@@ -150,7 +153,9 @@ export class FilmComponent implements OnInit {
 
   getOneFilm(id: string) {
     this.filmService.getOneFilm(id);
-    this.sidebarLeft.close();
+    if (this.device === "mobile-only"){
+      this.sidebarLeft.close();
+    }
   }
 
   getFilmsFromOneGenre(genre: string) {
@@ -165,4 +170,19 @@ export class FilmComponent implements OnInit {
     }
   }
 
+  swipeTooltip(){
+    if (this.device === "mobile-only"){
+      const lastVisit = localStorage.getItem("alreadyVisited");
+      let timeDifference = 0;
+      if (lastVisit){
+        timeDifference = Date.now()- parseInt(lastVisit);
+      }
+      if (!lastVisit || timeDifference >= 604800000){
+        let dialogRef = this.dialog.open(SwipeToolTipComponentComponent,{hasBackdrop:true});
+        dialogRef.afterClosed().subscribe(()=>{
+          localStorage.setItem("alreadyVisited",Date.now().toString());
+        });
+      }
+    }
+  }
 }

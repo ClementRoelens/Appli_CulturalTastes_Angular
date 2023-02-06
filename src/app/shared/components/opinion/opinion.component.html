@@ -3,14 +3,15 @@
         <h1>{{opinion.authorName}}</h1>
         <p>{{opinion.content}}</p>
         <div id="opinionIcons">
-            <img src="../assets/arrow_left.png" alt="arrow_left" (click)="opinionSelection(-1)">
+            <img class="opinionIcons" src="../assets/arrow_left.png" alt="arrow_left" (click)="opinionSelection(-1)">
             <div>
                 <span>{{opinion.likes}}</span>
-                <img [src]="likedOpinionIcon" alt="heart_icon" (click)="likeOpinion(opinion._id)">
+                <img class="opinionIcons" [src]="likedOpinionIcon" alt="heart_icon" (click)="likeOpinion(opinion._id)">
             </div>
-            <img src="../assets/arrow_right.png" alt="arrow_right" (click)="opinionSelection(1)">
+            <img class="opinionIcons" src="../assets/arrow_right.png" alt="arrow_right" (click)="opinionSelection(1)">
             </div>
+            <button mat-raised-button color="primary" *ngIf="device === 'mobile-only'" (click)="writeOpinion()">Nouvel avis</button>
         </div>
-   
+        
 </ng-container>
    

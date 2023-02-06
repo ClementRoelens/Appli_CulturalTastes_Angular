@@ -1,7 +1,7 @@
 <mat-spinner *ngIf="loading$ | async"></mat-spinner>
 <div *ngIf="!(loading$ | async)" id="content">
     <!-- Contenu mobile -->
-    <mat-sidenav-container *ngIf="class === 'mobile-only'">
+    <mat-sidenav-container *ngIf="device === 'mobile-only'">
         <mat-sidenav #snavLeft mode="over" hasBackdrop="true" position="start">
             <app-item-list id="film-list" *ngIf="films$ | async as films" 
                 [items]="films"
@@ -16,7 +16,7 @@
                     [likedOpinionsId]="user.likedOpinionsId" 
                     [user]="user"
                     [isLogged]="isLogged" 
-                    [class]="class" 
+                    [device]="device" 
                     (authorRequested)="getFilmsFromOneAuthor($event)"
                     ></app-item>
             </ng-container>
@@ -31,7 +31,7 @@
         </mat-sidenav>
     </mat-sidenav-container>
     <!-- Contenu desktop -->
-    <ng-container *ngIf="class==='desktop-only' && (selectedFilm$ |async) as selectedFilm">
+    <ng-container *ngIf="device==='desktop-only' && (selectedFilm$ |async) as selectedFilm">
         <app-item-list id="film-list" *ngIf="films$ | async as films" 
             [items]="films"
             (requestedItem)="getOneFilm($event)"></app-item-list>
@@ -43,7 +43,7 @@
                 [likedOpinionsId]="user.likedOpinionsId" 
                 [user]="user"
                 [isLogged]="isLogged" 
-                [class]="class" 
+                [device]="device" 
                 (authorRequested)="getFilmsFromOneAuthor($event)"></app-item>
         </ng-container>
         <ng-container *ngIf="activeGenres$ | async as activeGenres">

@@ -1,5 +1,5 @@
 mat-card {
-    height:83%;
+    height:85%;
 }
 
 h3 {
@@ -9,4 +9,21 @@ h3 {
 mat-dialog-actions{
     display:flex;
     justify-content: space-around;
+}
+
+@media (max-width:900px) and (orientation:portrait){
+    h2{
+        font-size:0.9em;
+        margin-bottom:0;
+    }
+    h3{
+        font-size:0.8em;
+        margin-bottom:0;
+    }
+    button{
+        font-size:0.8em;
+    }
+    mat-card {
+        padding-top:2px;
+    }
 }
