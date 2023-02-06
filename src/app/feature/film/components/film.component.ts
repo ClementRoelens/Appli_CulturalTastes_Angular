@@ -2,11 +2,12 @@ import { OpinionService } from './../../../shared/opinion.service';
 import { ActivatedRoute, TitleStrategy } from '@angular/router';
 import { SharedService } from './../../../shared/shared.service';
 import { AuthService } from './../../../core/auth.service';
-import { ChangeDetectionStrategy, Component, HostBinding, HostListener, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostBinding, HostListener, OnInit, ViewChild } from '@angular/core';
 import { combineLatest, map, Observable, take, tap } from 'rxjs';
 import { User } from 'src/app/shared/models/user.model';
 import { Film } from '../film.model';
 import { FilmService } from '../film.service';
+import { MatSidenav } from '@angular/material/sidenav';
 
 @Component({
   selector: 'app-film',
@@ -17,7 +18,9 @@ import { FilmService } from '../film.service';
 export class FilmComponent implements OnInit {
 
   @HostBinding('class') class!: string;
-  
+  @ViewChild('snavLeft') sidebarLeft!: MatSidenav;
+  @ViewChild('snavRight') sidebarRight!: MatSidenav;
+
   user$!: Observable<User>;
   films$!: Observable<Film[]>;
   selectedFilm$!: Observable<Film>;
@@ -147,10 +150,19 @@ export class FilmComponent implements OnInit {
 
   getOneFilm(id: string) {
     this.filmService.getOneFilm(id);
+    this.sidebarLeft.close();
   }
 
   getFilmsFromOneGenre(genre: string) {
     this.filmService.getFilmsFromOneGenre(genre);
+  }
+
+  swipeEvent(event:any){
+    if (event.deltaX > 40){
+      this.sidebarLeft.toggle();
+    } else if (event.deltaX < -40){
+      this.sidebarRight.toggle();
+    }
   }
 
 }

@@ -1,35 +1,56 @@
 <mat-spinner *ngIf="loading$ | async"></mat-spinner>
-<div *ngIf="!(loading$ | async)">
-    <ng-container *ngIf="selectedFilm$ |async as selectedFilm">
-        <ng-container *ngIf="class === 'desktop-only'">
+<div *ngIf="!(loading$ | async)" id="content">
+    <!-- Contenu mobile -->
+    <mat-sidenav-container *ngIf="class === 'mobile-only'">
+        <mat-sidenav #snavLeft mode="over" hasBackdrop="true" position="start">
             <app-item-list id="film-list" *ngIf="films$ | async as films" 
-            [items]="films"
-            (requestedItem)="getOneFilm($event)"
-            ></app-item-list>
-        </ng-container>
+                [items]="films"
+                (requestedItem)="getOneFilm($event)"></app-item-list>
+        </mat-sidenav>
+        <mat-sidenav-content *ngIf="selectedFilm$ |async as selectedFilm" (swipe)="swipeEvent($event)">
             <ng-container *ngIf="isLikedOrDisliked$ | async as isLikedOrDisliked">
-                <app-item id="film" *ngIf="user$ | async as user"
-                [item]="selectedFilm"
-                [itemType]="itemType" 
-                [isLikedOrDisliked]="isLikedOrDisliked"
-                [likedOpinionsId]="user.likedOpinionsId"
-                [user]="user"
-                [isLogged]="isLogged"
-                [class]="class"
-                (authorRequested)="getFilmsFromOneAuthor($event)"
-                ></app-item>
+                <app-item id="film" *ngIf="user$ | async as user" 
+                    [item]="selectedFilm" 
+                    [itemType]="itemType"
+                    [isLikedOrDisliked]="isLikedOrDisliked" 
+                    [likedOpinionsId]="user.likedOpinionsId" 
+                    [user]="user"
+                    [isLogged]="isLogged" 
+                    [class]="class" 
+                    (authorRequested)="getFilmsFromOneAuthor($event)"
+                    ></app-item>
             </ng-container>
+        </mat-sidenav-content>
+        <mat-sidenav #snavRight mode="over" hasBackdrop="true" position="end">
             <ng-container *ngIf="activeGenres$ | async as activeGenres">
-                <ng-container *ngIf="class === 'desktop-only'">
-                    <app-genre-list id="genres" *ngIf="genres$ | async as genres" 
-                    [genres]="genres"
-                    [activeGenres]="activeGenres" 
-                    (genreSelected)="getFilmsFromOneGenre($event)"
-                    ></app-genre-list>
-                </ng-container>
+                <app-genre-list id="genres" *ngIf="genres$ | async as genres" 
+                [genres]="genres"
+                [activeGenres]="activeGenres" 
+                (genreSelected)="getFilmsFromOneGenre($event)"></app-genre-list>
+            </ng-container>
+        </mat-sidenav>
+    </mat-sidenav-container>
+    <!-- Contenu desktop -->
+    <ng-container *ngIf="class==='desktop-only' && (selectedFilm$ |async) as selectedFilm">
+        <app-item-list id="film-list" *ngIf="films$ | async as films" 
+            [items]="films"
+            (requestedItem)="getOneFilm($event)"></app-item-list>
+        <ng-container *ngIf="isLikedOrDisliked$ | async as isLikedOrDisliked">
+            <app-item id="film" *ngIf="user$ | async as user" 
+                [item]="selectedFilm" 
+                [itemType]="itemType"
+                [isLikedOrDisliked]="isLikedOrDisliked" 
+                [likedOpinionsId]="user.likedOpinionsId" 
+                [user]="user"
+                [isLogged]="isLogged" 
+                [class]="class" 
+                (authorRequested)="getFilmsFromOneAuthor($event)"></app-item>
         </ng-container>
-
+        <ng-container *ngIf="activeGenres$ | async as activeGenres">
+            <app-genre-list id="genres" *ngIf="genres$ | async as genres" 
+                [genres]="genres"
+                [activeGenres]="activeGenres" 
+                (genreSelected)="getFilmsFromOneGenre($event)"></app-genre-list>
+        </ng-container>
     </ng-container>
-
-
 </div>

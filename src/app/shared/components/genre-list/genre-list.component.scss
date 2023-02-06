@@ -1,14 +1,24 @@
-ul {
-    max-width: 150px;
-    position: absolute;
-    right:25%;
-    // left: 150px;
-}
-
-.activeGenre {
-    font-size:1.2em;
+@media(min-width:900px) {
+    ul {
+        max-width: 150px;
+        position: absolute;
+        right: 25%;
+    }
+    .activeGenre {
+        font-size: 1.2em;
+    }
 }
 
 .inactiveGenre {
-    color:rgb(160,160,160)
+    color: rgb(160, 160, 160)
+}
+
+@media (max-width:900px) and (orientation:portrait) {
+    li {
+        font-size: 0.9em;
+        width:100px !important;
+    }
+    .activeGenre {
+        font-size: 1.1em;
+    }
 }

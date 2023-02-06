@@ -1,9 +1,12 @@
-li {
-    // margin-left:40px;
-}
 
 ul{
     position:absolute;
     left:0px;
+}
+
+@media (max-width:900px) and (orientation:portrait){
+    li{
+        font-size:0.7em;
+    }
 }
 
