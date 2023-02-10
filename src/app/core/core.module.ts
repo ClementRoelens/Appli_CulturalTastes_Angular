@@ -33,6 +33,7 @@ export class MyHammerConfig extends HammerGestureConfig {
     CommonModule,
     SharedModule,
     ReactiveFormsModule,
+    FormsModule,
     // RouterModule,
     HttpClientModule,
     HammerModule

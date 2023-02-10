@@ -71,9 +71,6 @@ export class SharedService {
                 tap(() => this.filmService.getOneFilm(itemId)),
                 tap(() => this.opinionService.opinionRemoved(opinionId))
             )
-            .subscribe(() => {
-                this.authService.getUser(userId);
-                this.filmService.getOneFilm(itemId);
-            });
+            .subscribe();
     }
 }

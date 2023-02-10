@@ -1,3 +1,4 @@
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { SharedModule } from "src/app/shared/shared.module";
@@ -12,7 +13,9 @@ import { FilmService } from "./film.service";
     imports: [
         CommonModule,
         FilmRoutingModule,
-        SharedModule
+        SharedModule,
+        ReactiveFormsModule,
+        FormsModule
     ],
     providers: [
         FilmService

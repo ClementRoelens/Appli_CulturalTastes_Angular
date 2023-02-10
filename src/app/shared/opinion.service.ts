@@ -24,7 +24,6 @@ export class OpinionService {
     constructor(private http: HttpClient) { }
 
     getOpinions(opinionsId: string[]) {
-        console.log("OpinionService.getOpinions()")
         this._selectedOpinion$.next(anonymousOpinion);
         if (opinionsId.length !== 0){
             let opinions: Opinion[] = [];

@@ -36,7 +36,12 @@
             [items]="films"
             (requestedItem)="getOneFilm($event)"></app-item-list>
         <ng-container *ngIf="isLikedOrDisliked$ | async as isLikedOrDisliked">
-            <app-item id="film" *ngIf="user$ | async as user" 
+            <div id="itemArea">
+                <input #searchInput type="text" [formControl]="searchedValue" name="search" placeholder="Rechercher"> 
+            <!--     <mat-form-field> -->
+                    <!-- <input #searchInput matInput type="text" [formControl]="searchedValue" name="search" placeholder="Rechercher"> -->
+                <!-- </mat-form-field> -->
+                <app-item id="film" *ngIf="user$ | async as user" 
                 [item]="selectedFilm" 
                 [itemType]="itemType"
                 [isLikedOrDisliked]="isLikedOrDisliked" 
@@ -45,6 +50,7 @@
                 [isLogged]="isLogged" 
                 [device]="device" 
                 (authorRequested)="getFilmsFromOneAuthor($event)"></app-item>
+            </div>
         </ng-container>
         <ng-container *ngIf="activeGenres$ | async as activeGenres">
             <app-genre-list id="genres" *ngIf="genres$ | async as genres" 

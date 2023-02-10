@@ -1,8 +1,9 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { BehaviorSubject, Observable, ReplaySubject, tap } from "rxjs";
+import { BehaviorSubject, Observable, ReplaySubject, tap, throwError } from "rxjs";
 import { Film } from "./film.model";
 import { environment } from "src/environments/environment";
+import { catchError } from "rxjs/internal/operators/catchError";
 
 // const anonymousFilm: Film = new Film;
 // const anonymouseFilmList : Film[] = new [anonymousFilm];
@@ -38,6 +39,11 @@ export class FilmService {
     private _loadingGenres$ = new BehaviorSubject<boolean>(false);
     get loadingGenres$(): Observable<boolean> {
         return this._loadingGenres$;
+    }
+
+    private _failSearch$ = new BehaviorSubject<boolean>(false);
+    get failSearch$():Observable<boolean>{
+        return this._failSearch$;
     }
 
     getFilms(getOneRandom: boolean, urlP?: string) {
@@ -87,6 +93,26 @@ export class FilmService {
         this.http.get<string[]>(`${environment.apiUrl}/film/getGenres`).pipe(
             tap(genres => this._genres$.next(genres)),
             tap(() => this._loadingGenres$.next(false))
+        ).subscribe();
+    }
+
+    search(searchedValue:string){
+        console.log("FilmService : recherche lancée");
+        this.http.get<Film[]>(`${environment.apiUrl}/film/search/${searchedValue}`).pipe(
+            tap(films => {
+                this._films$.next(films);
+                const rand = Math.round(Math.random() * (films.length - 1));
+                this._selectedFilm$.next(films[rand]);
+            }),
+            catchError(error => {
+                console.log("FilmService : erreur");
+                if (error.status === 404) {
+                  this._failSearch$.next(true);
+                  this._failSearch$.next(false);
+                  return throwError(() => new Error('No films found'));
+                }
+                return throwError(() => new Error(error));
+              })
         ).subscribe();
     }
 }
