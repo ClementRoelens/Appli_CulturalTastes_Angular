@@ -53,6 +53,9 @@ app-item {
 
 input{
     margin: 20px auto 30px auto;
+    @media(max-width:900px) and (orientation:portrait){
+        margin : 10px auto 0 auto;
+    }
     width: 80px;
     display: block;
     font-size:0.7em;

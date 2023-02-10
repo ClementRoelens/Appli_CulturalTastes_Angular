@@ -9,6 +9,7 @@
         </mat-sidenav>
         <mat-sidenav-content *ngIf="selectedFilm$ |async as selectedFilm" (swipe)="swipeEvent($event)">
             <ng-container *ngIf="isLikedOrDisliked$ | async as isLikedOrDisliked">
+                <input #searchInput type="text" [formControl]="searchedValue" name="search" placeholder="Rechercher"> 
                 <app-item id="film" *ngIf="user$ | async as user" 
                     [item]="selectedFilm" 
                     [itemType]="itemType"
