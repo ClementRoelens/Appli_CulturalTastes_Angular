@@ -7,6 +7,10 @@
         height: 100%;
     }
 
+    app-item{
+    overflow: scroll;
+    }
+
     input {
         margin: 10px auto 0 auto;
     }
@@ -39,7 +43,6 @@
 
     app-item {
         display: block;
-        ;
         margin: auto;
 
     }
