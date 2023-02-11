@@ -1,9 +1,4 @@
 
-ul{
-    position:absolute;
-    left:0px;
-}
-
 @media (max-width:900px) and (orientation:portrait){
     li{
         font-size:0.8em;
@@ -25,4 +20,11 @@ ul{
         margin-bottom: 0;
     }
 }
+
+ul{
+    position:absolute;
+    left:0px;
+}
+
+
 

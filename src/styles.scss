@@ -1,8 +1,58 @@
 /* You can add global styles to this file, and also import other style files */
 
-html,
-body {
-    height: 100%;
+@media (max-width:900px) and (orientation:portrait) {
+
+    html,
+    body {
+        height: 100%;
+    }
+
+    app-film {
+        display: block;
+        height: calc(100% - 70px);
+    }
+
+    li {
+        padding: 3px;
+        padding-top: 4px;
+        width: 120px;
+        margin: auto;
+    }
+
+    ul {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        height: 100%;
+        width: 100%;
+        margin: auto;
+    }
+
+    #opinions_and_likes .icons,
+    #opinionIcons img {
+
+        width: 25px;
+    }
+}
+
+@media (min-width:900px) {
+    li {
+        border-radius: 5px;
+        padding: 7px;
+        font-size: 1.1em;
+    }
+
+    li:hover {
+        background-color: #3f51b5;
+        color: white !important;
+        font-size: 1.2em;
+    }
+
+    #opinions_and_likes .icons,
+    #opinionIcons img {
+        width: 30px;
+        cursor: pointer;
+    }
 }
 
 body {
@@ -14,19 +64,6 @@ li {
     text-align: center;
     cursor: pointer;
     list-style-type: none;
-
-    @media (min-width:900px) {
-        border-radius: 5px;
-        padding: 7px;
-        font-size: 1.1em;
-    }
-
-    @media (max-width:900px) and (orientation:portrait) {
-        padding: 3px;
-        padding-top: 4px;
-        width: 120px;
-        margin: auto;
-    }
 }
 
 ul {
@@ -34,29 +71,11 @@ ul {
     padding-left: 0;
     border-radius: 5px;
     margin-bottom: 0;
-
-    @media (max-width:900px) and (orientation:portrait) {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-around;
-        height: 100%;
-        width: 100%;
-        margin: auto;
-    }
-
-    // border:solid 1px black;
 }
 
 #opinions_and_likes .icons,
 #opinionIcons img {
-    @media (max-width:900px) and (orientation:portrait) {
-        width: 25px;
-    }
-
-    @media (min-width:900px) {
-        width: 30px;
-        cursor: pointer;
-    }
+    width: 25px;
 }
 
 h1 {
@@ -65,23 +84,6 @@ h1 {
     margin: 0 auto 0 auto;
 }
 
-h1,
-h2 {
+h1, h2 {
     text-align: center;
-}
-
-
-@media (max-width:900px) and (orientation:portrait) {
-    app-film {
-        display: block;
-        height: calc(100% - 70px);
-    }
-}
-
-@media (min-width:900px){
-    li:hover {
-        background-color: #3f51b5;
-        color: white !important;
-        font-size: 1.2em;
-    }
 }

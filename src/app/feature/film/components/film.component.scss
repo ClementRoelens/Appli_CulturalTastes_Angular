@@ -1,3 +1,50 @@
+@media (max-width:900px) and (orientation:portrait) {
+
+    app-item-list,
+    app-genre-list {
+        display: block;
+        width: 140px;
+        height: 100%;
+    }
+
+    input {
+        margin: 10px auto 0 auto;
+    }
+
+    #activeGenresMobile{
+        display:flex;
+        flex-direction: row;
+        justify-content: center;
+        height:auto;
+        max-width:50%;
+    }
+}
+
+@media(min-width:900px) {
+
+    app-item-list,
+    app-genre-list {
+        width: 30%;
+    }
+
+    app-genre-list {
+        padding-right: 40px;
+        top: 106px;
+    }
+
+    app-item-list {
+        left: 5%;
+        top: 10px;
+    }
+
+    app-item {
+        display: block;
+        ;
+        margin: auto;
+
+    }
+}
+
 mat-spinner {
     margin: auto;
     margin-top: 200px;
@@ -13,30 +60,6 @@ mat-spinner {
 app-item-list,
 app-genre-list {
     position: relative;
-
-    @media(min-width:900px) {
-        width: 30%;
-    }
-
-    @media (max-width:900px) and (orientation:portrait) {
-        display: block;
-        width: 140px;
-        height: 100%;
-    }
-}
-
-app-genre-list {
-    @media(min-width:900px) {
-        padding-right: 40px;
-        top:106px;
-    }
-}
-
-@media (min-width:900px) {
-    app-item-list {
-        left: 5%;
-        top:10px;
-    }
 }
 
 img {
@@ -44,32 +67,23 @@ img {
     height: 20px;
 }
 
-app-item {
-    @media(min-width:900px) {
-        display:block;;
-        margin:auto;
-    }
-    // user-select:none;
-}
 
-input{
+
+input {
     margin: 20px auto 30px auto;
-    @media(max-width:900px) and (orientation:portrait){
-        margin : 10px auto 0 auto;
-    }
     width: 80px;
     display: block;
-    font-size:0.7em;
-    border-radius:5px;
-    text-align:center;
-    border-width:1px;
+    font-size: 0.7em;
+    border-radius: 5px;
+    text-align: center;
+    border-width: 1px;
 }
 
-input:hover, input:focus{
-    width:150px;
-    font-size:1em;
+input:hover, input:focus {
+    width: 150px;
+    font-size: 1em;
 }
 
-snack-bar-container{
-    max-width:15vw !important;
+snack-bar-container {
+    max-width: 15vw !important;
 }
