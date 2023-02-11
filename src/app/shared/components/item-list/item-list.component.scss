@@ -8,5 +8,21 @@ ul{
     li{
         font-size:0.8em;
     }
+
+    h2{
+        font-size:1.05em;
+        font-weight:normal;
+        line-height: inherit;
+        margin-top:10px;
+    }
+}
+
+@media (min-width:900px){
+    h2{
+        font-size:1.25em;
+        font-weight:normal;
+        height:96px;
+        margin-bottom: 0;
+    }
 }
 

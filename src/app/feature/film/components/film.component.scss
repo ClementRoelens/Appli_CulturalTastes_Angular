@@ -15,7 +15,6 @@ app-genre-list {
     position: relative;
 
     @media(min-width:900px) {
-        top: 70px;
         width: 30%;
     }
 
@@ -29,12 +28,14 @@ app-genre-list {
 app-genre-list {
     @media(min-width:900px) {
         padding-right: 40px;
+        top:106px;
     }
 }
 
 @media (min-width:900px) {
     app-item-list {
         left: 5%;
+        top:10px;
     }
 }
 

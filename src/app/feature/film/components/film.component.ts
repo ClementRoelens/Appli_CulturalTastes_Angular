@@ -20,10 +20,10 @@ import { FormControl } from '@angular/forms';
 })
 export class FilmComponent implements OnInit {
 
-  @HostBinding('device') device!: string;
-  @ViewChild('snavLeft') sidebarLeft!: MatSidenav;
-  @ViewChild('snavRight') sidebarRight!: MatSidenav;
-  @ViewChild('searchInput') searchInput!: HTMLElement;
+  @HostBinding("device") device!: string;
+  @ViewChild("snavLeft") sidebarLeft!: MatSidenav;
+  @ViewChild("snavRight") sidebarRight!: MatSidenav;
+  @ViewChild("searchInput") searchInput!: HTMLElement;
 
   user$!: Observable<User>;
   films$!: Observable<Film[]>;
@@ -42,6 +42,8 @@ export class FilmComponent implements OnInit {
   userId!: string;
   isLogged!: boolean;
   seekedId!: string;
+  seekedGenre!:string;
+  seekedAuthor!:string;
 
   constructor(
     private filmService: FilmService,
@@ -54,8 +56,10 @@ export class FilmComponent implements OnInit {
 
   ngOnInit(): void {
     this.checkWidth(window.innerWidth);
-    this.itemType = 'film'
-    this.seekedId = this.route.snapshot.params['id'];
+    this.itemType = "film";
+    this.seekedAuthor = "";
+    this.seekedGenre = "";
+    this.seekedId = this.route.snapshot.params["id"];
     this.initUserObservables();
     this.initFilmObservables();
     this.initOpinionObservables();
@@ -67,23 +71,23 @@ export class FilmComponent implements OnInit {
     this.initSearch();
   }
 
-  @HostListener('window:resize', ['$event'])
+  @HostListener("window:resize", ["$event"])
   onResize(event: any) {
     this.checkWidth(event.target.innerWidth);
   }
 
   checkWidth(width: number) {
     if (width <= 900) {
-      this.device = 'mobile-only';
+      this.device = "mobile-only";
     } else {
-      this.device = 'desktop-only';
+      this.device = "desktop-only";
     }
   }
 
   private initUserObservables() {
     this.authService.user$.pipe(
       tap(user => this.isLogged = user.username ? true : false),
-      tap(user => this.userId = user._id ? user._id : '')
+      tap(user => this.userId = user._id ? user._id : "")
     ).subscribe();
     this.user$ = this.authService.user$;
   }
@@ -158,6 +162,8 @@ export class FilmComponent implements OnInit {
 
   getFilmsFromOneAuthor(author: string) {
     this.filmService.getFilmsFromOneAuthor(author);
+    this.seekedAuthor = author;
+    this.seekedGenre = "";
     this.resetInput(false);
   }
 
@@ -171,6 +177,8 @@ export class FilmComponent implements OnInit {
 
   getFilmsFromOneGenre(genre: string) {
     this.filmService.getFilmsFromOneGenre(genre);
+    this.seekedGenre = genre;
+    this.seekedAuthor = "";
     this.resetInput(false);
   }
 
@@ -199,12 +207,14 @@ export class FilmComponent implements OnInit {
   }
 
   private initSearch() {
-    this.searchedValue = new FormControl<string>('');
+    this.searchedValue = new FormControl<string>("");
     this.searchObservable = this.searchedValue.valueChanges.pipe(
       debounceTime(500),
       tap(value => {
         if (value !== "") {
-          this.filmService.search(value)
+          this.filmService.search(value);
+          this.seekedAuthor = "";
+          this.seekedGenre = "";
         } else {
           this.filmService.getFilms(true);
         }
@@ -229,6 +239,8 @@ export class FilmComponent implements OnInit {
     this.initSearch();
     if (newFilms) {
       this.filmService.getFilms(true);
+      this.seekedAuthor = "";
+      this.seekedGenre = "";
     }
   }
 }

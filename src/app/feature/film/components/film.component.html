@@ -5,6 +5,9 @@
         <mat-sidenav #snavLeft mode="over" hasBackdrop="true" position="start">
             <app-item-list id="film-list" *ngIf="films$ | async as films" 
                 [items]="films"
+                [itemType]="itemType"
+                [selectedAuthor]="seekedAuthor"
+                [selectedGenre]="seekedGenre"
                 [device]="device"
                 (requestedItem)="getOneFilm($event)"></app-item-list>
         </mat-sidenav>
@@ -36,6 +39,9 @@
     <ng-container *ngIf="device==='desktop-only' && (selectedFilm$ |async) as selectedFilm">
         <app-item-list id="film-list" *ngIf="films$ | async as films" 
             [items]="films"
+            [itemType]="itemType"
+            [selectedAuthor]="seekedAuthor"
+            [selectedGenre]="seekedGenre"
             [device]="device"
             (requestedItem)="getOneFilm($event)"></app-item-list>
         <ng-container *ngIf="isLikedOrDisliked$ | async as isLikedOrDisliked">

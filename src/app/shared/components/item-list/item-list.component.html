@@ -1,8 +1,15 @@
-<ul *ngIf="device === 'mobile-only'">
-    <li *ngFor="let item of items |slice:0:15" 
-        (click)="itemSelection(item._id)">{{item.title}}</li>
-</ul>
-<ul *ngIf="device === 'desktop-only'">
-    <li *ngFor="let item of items" 
-        (click)="itemSelection(item._id)">{{item.title}}</li>
+<ul>
+    <h2>{{listTitle}}</h2>
+    <ng-container *ngIf="device === 'mobile-only'">
+        <li *ngFor="let item of items |slice:0:15" 
+            (click)="itemSelection(item._id)">
+            {{item.title}}
+        </li>
+    </ng-container>
+   <ng-container *ngIf="device === 'desktop-only'">
+        <li *ngFor="let item of items" 
+            (click)="itemSelection(item._id)">
+            {{item.title}}
+        </li>
+   </ng-container>
 </ul>
