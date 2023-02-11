@@ -12,6 +12,7 @@ import { Film } from 'src/app/feature/film/film.model';
 export class ItemListComponent implements OnInit {
 
   @Input() items!: Film[] | Album[] | Game[] | any[];
+  @Input() device!:string;
 
   @Output() requestedItem = new EventEmitter<string>();
 
