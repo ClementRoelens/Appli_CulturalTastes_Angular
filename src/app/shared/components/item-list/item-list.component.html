@@ -1,5 +1,7 @@
 <ul>
-    <h2>{{listTitle}}</h2>
+    <a  matTooltip="Cliquez pour obtenir la liste complète"
+        matTooltipPosition="above"
+        [routerLink]="listLink">{{listTitle}}</a>
     <ng-container *ngIf="device === 'mobile-only'">
         <li *ngFor="let item of items |slice:0:15" 
             (click)="itemSelection(item._id)">

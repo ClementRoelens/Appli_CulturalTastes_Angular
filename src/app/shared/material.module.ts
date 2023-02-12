@@ -10,10 +10,11 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [],
-  imports:[CommonModule],
+  imports: [CommonModule],
   exports: [
     MatButtonModule,
     MatToolbarModule,
@@ -24,7 +25,8 @@ import { MatSidenavModule } from '@angular/material/sidenav';
     MatInputModule,
     MatCardModule,
     MatSnackBarModule,
-    MatSidenavModule
+    MatSidenavModule,
+    MatTooltipModule
   ]
 })
 export class MaterialModule { }

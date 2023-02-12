@@ -13,6 +13,7 @@ import { UserComponent } from './components/user/user.component';
 import { MaterialModule } from './material.module';
 import { GenreListComponent } from './components/genre-list/genre-list.component';
 import { ItemListComponent } from './components/item-list/item-list.component';
+import { FullListComponent } from './components/full-list/full-list.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { ItemListComponent } from './components/item-list/item-list.component';
     UserComponent,
     ItemComponent,
     CreateOrModifyOpinionComponent,
-    SigninOrSignupComponent
+    SigninOrSignupComponent,
+    FullListComponent
   ],
   imports: [
     CommonModule,
@@ -41,6 +43,7 @@ import { ItemListComponent } from './components/item-list/item-list.component';
     ItemComponent,
     CreateOrModifyOpinionComponent,
     SigninOrSignupComponent,
+    FullListComponent,
     MaterialModule,
     RouterModule
   ],

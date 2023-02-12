@@ -1,0 +1,21 @@
+<!-- <ol *ngIf="items$ | async as items">
+    <h2>
+        <span class="title">Titre</span><span class="author">Auteur</span>
+    </h2>
+    <li *ngFor="let item of items">
+        <span class="title">{{item.title}}</span><span class="author">{{item.author}}</span>
+    </li>
+</ol> -->
+
+<table *ngIf="items$ | async as items">
+    <thead>
+        <td>Titre</td>
+        <td>Auteur</td>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of items">
+            <td [routerLink]="'/'+item._id">{{item.title}}</td>
+            <td [routerLink]="[getEncodedAuthorUrl(item.author)]">{{item.author}}</td>
+        </tr>
+    </tbody>
+</table>

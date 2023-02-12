@@ -39,7 +39,7 @@
         </mat-sidenav>
     </mat-sidenav-container>
     <!-- Contenu desktop -->
-    <ng-container *ngIf="device==='desktop-only' && (selectedFilm$ |async) as selectedFilm">
+    <ng-container *ngIf="device==='desktop-only' && (selectedFilm$ | async) as selectedFilm">
         <app-item-list id="film-list" *ngIf="films$ | async as films" 
             [items]="films"
             [itemType]="itemType"
@@ -50,9 +50,6 @@
         <ng-container *ngIf="isLikedOrDisliked$ | async as isLikedOrDisliked">
             <div id="itemArea">
                 <input #searchInput type="text" [formControl]="searchedValue" name="search" placeholder="Rechercher"> 
-            <!--     <mat-form-field> -->
-                    <!-- <input #searchInput matInput type="text" [formControl]="searchedValue" name="search" placeholder="Rechercher"> -->
-                <!-- </mat-form-field> -->
                 <app-item id="film" *ngIf="user$ | async as user" 
                 [item]="selectedFilm" 
                 [itemType]="itemType"

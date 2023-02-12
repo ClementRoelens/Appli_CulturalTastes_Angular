@@ -7,7 +7,6 @@ import { SharedService } from './../../shared.service';
 import { Opinion } from './../../models/opinion.model';
 import { environment } from './../../../../environments/environment';
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Router } from '@angular/router';
 import { Film } from 'src/app/feature/film/film.model';
 import { Game } from 'src/app/feature/game/game.model';
 import { Album } from 'src/app/feature/music/album.model';
@@ -41,8 +40,7 @@ export class ItemComponent implements OnInit {
 
   constructor(
     private sharedService: SharedService,
-    private dialog: MatDialog,
-    private router: Router
+    private dialog: MatDialog    
   ) { }
 
   ngOnInit(): void {

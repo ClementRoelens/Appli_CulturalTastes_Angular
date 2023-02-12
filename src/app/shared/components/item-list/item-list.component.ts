@@ -20,6 +20,7 @@ export class ItemListComponent implements OnInit {
   @Output() requestedItem = new EventEmitter<string>();
 
   listTitle!:string;
+  listLink!:string;
 
   constructor() { }
 
@@ -27,6 +28,22 @@ export class ItemListComponent implements OnInit {
   }
 
   ngOnChanges(){
+    this.titleCreation();
+    if (this.selectedAuthor !== ""){
+      this.listLink = "author/" + this.selectedAuthor;
+    } else if (this.selectedGenre !== ""){
+      this.listLink = "genre/" + this.selectedGenre;
+    } else {
+      this.listLink = "getAll";
+    }
+  }
+
+  itemSelection(id: string) {
+    this.requestedItem.emit(id);
+    
+  }
+
+  private titleCreation(){
     let itemNumber = (this.device === "mobile-only") ? 15 : 20;
     let randomItems = false;
     if (this.items.length > itemNumber || (this.selectedAuthor === "" && this.selectedGenre === "")){
@@ -47,10 +64,5 @@ export class ItemListComponent implements OnInit {
     } else if (this.selectedGenre !== ""){
       this.listTitle += " dans le genre " + this.selectedGenre;
     }
-  }
-
-  itemSelection(id: string) {
-    this.requestedItem.emit(id);
-    
   }
 }

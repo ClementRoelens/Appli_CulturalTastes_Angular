@@ -5,6 +5,7 @@ import { SharedModule } from "src/app/shared/shared.module";
 import { FilmComponent } from "./components/film.component";
 import { FilmRoutingModule } from "./film.routing-module";
 import { FilmService } from "./film.service";
+import { FilmResolver } from './film.resolver';
 
 @NgModule({
     declarations: [
@@ -18,7 +19,8 @@ import { FilmService } from "./film.service";
         FormsModule
     ],
     providers: [
-        FilmService
+        FilmService,
+        FilmResolver
     ],
     exports:[
         FilmComponent

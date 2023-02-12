@@ -67,12 +67,24 @@ export class FilmService {
         ).subscribe();
     }
 
+    getAllFilms(){
+        return this.http.get<Film[]>(`${environment.apiUrl}/film`);
+    }
+
     getFilmsFromOneAuthor(author: string) {
         this.getFilms(true, `getRandomInOneAuthor/${author}`);
     }
 
+    getAllFilmsInOneAuthor(author:string){
+        return this.http.get<Film[]>(`${environment.apiUrl}/film/getAllInOneAuthor/${author}`);
+    }
+
     getFilmsFromOneGenre(genre: string) {
         this.getFilms(true, `getRandomInOneGenre/${genre}`);
+    }
+
+    getAllFilmsFromOneGenre(genre: string) {
+        return this.http.get<Film[]>(`${environment.apiUrl}/film/getAllInOneGenre/${genre}`);
     }
 
     getOneFilm(id: string) {

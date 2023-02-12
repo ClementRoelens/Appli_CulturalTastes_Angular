@@ -1,0 +1,32 @@
+// ol{
+//     margin:auto;
+//     width:40%;
+// }
+
+// li {
+//     list-style-type: none;
+// }
+
+// .title{
+//     margin-right:20px;
+// }
+
+table {
+    margin: auto;
+    margin-top:15px;
+    border-spacing: 20px 4px;
+}
+
+thead {
+    font-size: 1.3em;
+    font-weight: 400;
+}
+
+thead td{
+    padding-bottom:10px;
+}
+
+td:hover{
+    text-decoration: underline;
+    cursor: pointer;
+}

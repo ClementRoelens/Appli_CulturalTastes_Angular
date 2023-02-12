@@ -4,7 +4,7 @@
         font-size:0.8em;
     }
 
-    h2{
+    a{
         font-size:1.05em;
         font-weight:normal;
         line-height: inherit;
@@ -13,17 +13,29 @@
 }
 
 @media (min-width:900px){
-    h2{
+    a{
         font-size:1.25em;
         font-weight:normal;
         height:96px;
         margin-bottom: 0;
+    }
+
+    a:hover{
+        text-decoration: underline;
+        cursor:pointer;
     }
 }
 
 ul{
     position:absolute;
     left:0px;
+}
+
+a{
+    color:black;
+    text-decoration: none;
+    display:block;
+    text-align:center;
 }
 
 

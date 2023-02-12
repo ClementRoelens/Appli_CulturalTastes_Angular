@@ -67,6 +67,9 @@ export class FilmComponent implements OnInit {
     this.initLikedAndDislikedObservable();
     this.filmService.getGenres();
     this.filmService.getFilms(this.seekedId === undefined);
+    if (this.seekedId !== undefined){
+      this.filmService.getOneFilm(this.seekedId);
+    }
     this.swipeTooltip();
     this.initSearch();
   }
