@@ -1,5 +1,5 @@
 
-@media (max-width:900px) and (orientation:portrait){
+@media (orientation:portrait){
     li{
         font-size:0.8em;
     }
@@ -10,9 +10,13 @@
         line-height: inherit;
         margin-top:10px;
     }
+
+    a:focus-visible{
+        outline:none;
+    }
 }
 
-@media (min-width:900px){
+@media (orientation:landscape) {
     a{
         font-size:1.25em;
         font-weight:normal;

@@ -1,14 +1,10 @@
-@media (max-width:900px) and (orientation:portrait) {
+@media(orientation:portrait) {
 
     app-item-list,
     app-genre-list {
         display: block;
         width: 140px;
         height: 100%;
-    }
-
-    app-item{
-    overflow: scroll;
     }
 
     input {
@@ -21,6 +17,23 @@
         justify-content: center;
         height:auto;
         max-width:50%;
+    }
+
+    #leftSwipeArea, 
+    #rightSwipeArea{
+        position:fixed;
+        height:100%;
+        width:25%;
+        overflow:none;
+        z-index:2;
+    }
+
+    #leftSwipeArea{
+        left:0;
+    }
+
+    #rightSwipeArea{
+        right:0;
     }
 }
 

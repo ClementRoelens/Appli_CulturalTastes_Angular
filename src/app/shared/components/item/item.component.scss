@@ -1,4 +1,4 @@
-@media(max-width:900px) and (orientation:portrait) {
+@media (orientation:portrait) {    
     #center {
         flex-direction: column;
     }
@@ -54,6 +54,7 @@
     #description {
         padding-top: 5px;
         font-size: 0.9em;
+        // overflow: scroll;
     }
 }
 

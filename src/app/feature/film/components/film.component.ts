@@ -186,6 +186,7 @@ export class FilmComponent implements OnInit {
   }
 
   swipeEvent(event: any) {
+    console.log("swipeEvent")
     if (event.deltaX > 40) {
       this.sidebarLeft.toggle();
     } else if (event.deltaX < -40) {

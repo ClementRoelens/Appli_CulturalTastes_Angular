@@ -11,7 +11,9 @@
                 [device]="device"
                 (requestedItem)="getOneFilm($event)"></app-item-list>
         </mat-sidenav>
-        <mat-sidenav-content *ngIf="selectedFilm$ |async as selectedFilm" (swipe)="swipeEvent($event)">
+        <mat-sidenav-content *ngIf="selectedFilm$ |async as selectedFilm">
+            <div id="leftSwipeArea" (swipe)="swipeEvent($event)"></div>
+            <div id="rightSwipeArea" (swipe)="swipeEvent($event)"></div>
             <ng-container *ngIf="isLikedOrDisliked$ | async as isLikedOrDisliked">
                 <input #searchInput type="text" [formControl]="searchedValue" name="search" placeholder="Rechercher"> 
                 <ul id="activeGenresMobile">

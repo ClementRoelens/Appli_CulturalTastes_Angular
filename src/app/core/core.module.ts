@@ -18,7 +18,7 @@ import { SwipeToolTipComponentComponent } from './components/swipe-tool-tip-comp
 @Injectable()
 export class MyHammerConfig extends HammerGestureConfig {
   override = <any> {
-    swipe: { direction: Hammer.DIRECTION_ALL },
+    swipe: { direction: Hammer.DIRECTION_HORIZONTAL },
   };
 }
 
