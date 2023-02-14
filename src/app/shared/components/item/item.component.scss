@@ -1,6 +1,7 @@
 @media (orientation:portrait) {    
     #center {
         flex-direction: column;
+        width:55%;
     }
 
     h1 {
@@ -54,7 +55,6 @@
     #description {
         padding-top: 5px;
         font-size: 0.9em;
-        // overflow: scroll;
     }
 }
 

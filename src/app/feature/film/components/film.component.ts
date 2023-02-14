@@ -1,5 +1,5 @@
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { SwipeToolTipComponentComponent } from './../../../core/components/swipe-tool-tip-component/swipe-tool-tip-component.component';
+import { PresentationDialogComponent } from '../../../core/components/presentation-dialog/presentation-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { OpinionService } from './../../../shared/opinion.service';
 import { ActivatedRoute } from '@angular/router';
@@ -42,8 +42,8 @@ export class FilmComponent implements OnInit {
   userId!: string;
   isLogged!: boolean;
   seekedId!: string;
-  seekedGenre!:string;
-  seekedAuthor!:string;
+  seekedGenre!: string;
+  seekedAuthor!: string;
 
   constructor(
     private filmService: FilmService,
@@ -67,10 +67,10 @@ export class FilmComponent implements OnInit {
     this.initLikedAndDislikedObservable();
     this.filmService.getGenres();
     this.filmService.getFilms(this.seekedId === undefined);
-    if (this.seekedId !== undefined){
+    if (this.seekedId !== undefined) {
       this.filmService.getOneFilm(this.seekedId);
     }
-    this.swipeTooltip();
+    // this.tooltip();
     this.initSearch();
   }
 
@@ -186,29 +186,42 @@ export class FilmComponent implements OnInit {
   }
 
   swipeEvent(event: any) {
-    console.log("swipeEvent")
     if (event.deltaX > 40) {
       this.sidebarLeft.toggle();
+      if (this.device === "mobile-only") {
+        const lastVisit = localStorage.getItem("alreadyVisitedFullList");
+        let timeDifference = 0;
+        if (lastVisit) {
+          timeDifference = Date.now() - parseInt(lastVisit);
+        }
+        if (!lastVisit || timeDifference >= 604800000) {
+          let dialogRef = this.dialog.open(PresentationDialogComponent, { hasBackdrop: true, data: "full-list" });
+          dialogRef.afterClosed().subscribe(() => {
+            localStorage.setItem("alreadyVisitedFullList", Date.now().toString());
+          });
+        }
+      }
     } else if (event.deltaX < -40) {
       this.sidebarRight.toggle();
     }
   }
 
-  swipeTooltip() {
-    if (this.device === "mobile-only") {
-      const lastVisit = localStorage.getItem("alreadyVisited");
-      let timeDifference = 0;
-      if (lastVisit) {
-        timeDifference = Date.now() - parseInt(lastVisit);
-      }
-      if (!lastVisit || timeDifference >= 604800000) {
-        let dialogRef = this.dialog.open(SwipeToolTipComponentComponent, { hasBackdrop: true });
-        dialogRef.afterClosed().subscribe(() => {
-          localStorage.setItem("alreadyVisited", Date.now().toString());
-        });
-      }
-    }
-  }
+  // tooltip() {
+  //   if (this.device === "mobile-only") {
+  //     const lastVisit = localStorage.getItem("alreadyVisitedSwipe");
+  //     let timeDifference = 0;
+  //     if (lastVisit) {
+  //       timeDifference = Date.now() - parseInt(lastVisit);
+  //     }
+  //     if (!lastVisit || timeDifference >= 604800000) {
+  //       let dialogRef = this.dialog.open(PresentationDialogComponent, { hasBackdrop: true, data: "swipe" });
+  //       dialogRef.afterClosed().subscribe(() => {
+  //         localStorage.setItem("alreadyVisitedSwipe", Date.now().toString());
+  //       });
+  //     }
+  //   }
+  // }
+
 
   private initSearch() {
     this.searchedValue = new FormControl<string>("");

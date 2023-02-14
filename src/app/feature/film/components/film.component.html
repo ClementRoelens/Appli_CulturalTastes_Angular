@@ -12,8 +12,25 @@
                 (requestedItem)="getOneFilm($event)"></app-item-list>
         </mat-sidenav>
         <mat-sidenav-content *ngIf="selectedFilm$ |async as selectedFilm">
-            <div id="leftSwipeArea" (swipe)="swipeEvent($event)"></div>
-            <div id="rightSwipeArea" (swipe)="swipeEvent($event)"></div>
+            <div id="leftSwipeArea" (swipe)="swipeEvent($event)">
+                <div id="leftSwipeHintArea" (click)="sidebarLeft.toggle()">
+                    <span class="swipeHintArea">F</span>
+                    <span class="swipeHintArea">I</span>
+                    <span class="swipeHintArea">L</span>
+                    <span class="swipeHintArea">M</span>
+                    <span class="swipeHintArea">S</span>
+                </div>
+            </div>
+            <div id="rightSwipeArea" (swipe)="swipeEvent($event)">
+                <div id="rightSwipeHintArea" (click)="sidebarRight.toggle()">
+                    <span class="swipeHintArea">G</span>
+                    <span class="swipeHintArea">E</span>
+                    <span class="swipeHintArea">N</span>
+                    <span class="swipeHintArea">R</span>
+                    <span class="swipeHintArea">E</span>
+                    <span class="swipeHintArea">S</span>
+                </div>
+            </div>
             <ng-container *ngIf="isLikedOrDisliked$ | async as isLikedOrDisliked">
                 <input #searchInput type="text" [formControl]="searchedValue" name="search" placeholder="Rechercher"> 
                 <ul id="activeGenresMobile">

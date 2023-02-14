@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SwipeToolTIpComponentComponent } from './swipe-tool-tip-component.component';
+import { PresentationDialogComponent } from './presentation-dialog.component';
 
 describe('SwipeToolTIpComponentComponent', () => {
-  let component: SwipeToolTIpComponentComponent;
-  let fixture: ComponentFixture<SwipeToolTIpComponentComponent>;
+  let component: PresentationDialogComponent;
+  let fixture: ComponentFixture<PresentationDialogComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SwipeToolTIpComponentComponent ]
+      declarations: [ PresentationDialogComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(SwipeToolTIpComponentComponent);
+    fixture = TestBed.createComponent(PresentationDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

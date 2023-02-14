@@ -1,12 +1,4 @@
-<!-- <ol *ngIf="items$ | async as items">
-    <h2>
-        <span class="title">Titre</span><span class="author">Auteur</span>
-    </h2>
-    <li *ngFor="let item of items">
-        <span class="title">{{item.title}}</span><span class="author">{{item.author}}</span>
-    </li>
-</ol> -->
-
+<button mat-raised-button (click)="backToHome()">Retour</button>
 <table *ngIf="items$ | async as items">
     <thead>
         <td>Titre</td>

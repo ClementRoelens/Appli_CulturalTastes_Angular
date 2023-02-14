@@ -25,16 +25,43 @@
         height:100%;
         width:25%;
         overflow:none;
-        z-index:2;
     }
 
     #leftSwipeArea{
-        left:0;
+        left:-3px;        
     }
 
     #rightSwipeArea{
-        right:0;
+        right:-8px;
+        display:flex;
+        flex-direction: column;
+        align-items:flex-end;
+        padding-right: 5px;
     }
+
+    #leftSwipeHintArea, #rightSwipeHintArea {
+        position:relative;
+        top:30%;
+        display:flex;
+        flex-direction: column;
+        padding-left:3px;
+        border: solid 1px rgb(180 210 240);
+        border-radius: 6px;
+        background-color: rgb(187 221 255 / 68%);
+        width:20px;
+        height:122px;
+    }
+
+    #leftSwipeHintArea {
+        line-height:24px;
+    }
+
+    .swipeHintArea{
+        width:15px;
+        text-align: center;
+        opacity: 0.7;
+    }
+
 }
 
 @media(min-width:900px) {
