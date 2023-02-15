@@ -100,15 +100,6 @@ export class FilmComponent implements OnInit {
   private initFilmObservables() {
     this.films$ = this.filmService.films$;
     this.selectedFilm$ = this.filmService.selectedFilm$;
-
-    const loadingFilms = this.filmService.loadingFilms$;
-    const loadingGenres = this.filmService.loadingGenres$;
-    this.loading$ = combineLatest([
-      loadingFilms,
-      loadingGenres
-    ]).pipe(
-      map(([loadingFilms, loadingGenres]) => loadingFilms || loadingGenres)
-    );
   }
 
   private initOpinionObservables() {
@@ -182,6 +173,9 @@ export class FilmComponent implements OnInit {
     this.filmService.getFilmsFromOneGenre(genre);
     this.seekedGenre = genre;
     this.seekedAuthor = "";
+    if (this.device === "mobile-only"){
+      this.sidebarRight.close();
+    }    
   }
 
   swipeEvent(event: any) {
