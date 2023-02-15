@@ -108,10 +108,10 @@ export class FilmService {
         ).subscribe();
     }
 
-    search(searchedValue:string){
-        console.log("FilmService : recherche lancée");
+    search(searchedValue:string) {
         this.http.get<Film[]>(`${environment.apiUrl}/film/search/${searchedValue}`).pipe(
             tap(films => {
+                this._failSearch$.next(false);
                 this._films$.next(films);
                 const rand = Math.round(Math.random() * (films.length - 1));
                 this._selectedFilm$.next(films[rand]);
@@ -120,7 +120,6 @@ export class FilmService {
                 console.log("FilmService : erreur");
                 if (error.status === 404) {
                   this._failSearch$.next(true);
-                  this._failSearch$.next(false);
                   return throwError(() => new Error('No films found'));
                 }
                 return throwError(() => new Error(error));

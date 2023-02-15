@@ -33,9 +33,8 @@ export class FilmComponent implements OnInit {
   isLiked$!: Observable<boolean>;
   isLikedOrDisliked$!: Observable<{ liked: boolean, disliked: boolean }>;
   activeGenres$!: Observable<string[]>;
+  failSearch$!: Observable<boolean>;
 
-  failSearch!: Subscription;
-  searchObservable!: Subscription;
   searchedValue!: FormControl;
 
   itemType!: string;
@@ -70,8 +69,11 @@ export class FilmComponent implements OnInit {
     if (this.seekedId !== undefined) {
       this.filmService.getOneFilm(this.seekedId);
     }
-    // this.tooltip();
-    this.initSearch();
+    this.searchedValue = new FormControl<string>("");
+    this.failSearch$ = this.filmService.failSearch$;
+    this.failSearch$.pipe(
+      tap(res=>console.log("failSearch mis à jour : "+res))
+    ).subscribe();
   }
 
   @HostListener("window:resize", ["$event"])
@@ -167,7 +169,6 @@ export class FilmComponent implements OnInit {
     this.filmService.getFilmsFromOneAuthor(author);
     this.seekedAuthor = author;
     this.seekedGenre = "";
-    this.resetInput(false);
   }
 
   getOneFilm(id: string) {
@@ -175,14 +176,12 @@ export class FilmComponent implements OnInit {
     if (this.device === "mobile-only") {
       this.sidebarLeft.close();
     }
-    this.resetInput(false);
   }
 
   getFilmsFromOneGenre(genre: string) {
     this.filmService.getFilmsFromOneGenre(genre);
     this.seekedGenre = genre;
     this.seekedAuthor = "";
-    this.resetInput(false);
   }
 
   swipeEvent(event: any) {
@@ -206,58 +205,11 @@ export class FilmComponent implements OnInit {
     }
   }
 
-  // tooltip() {
-  //   if (this.device === "mobile-only") {
-  //     const lastVisit = localStorage.getItem("alreadyVisitedSwipe");
-  //     let timeDifference = 0;
-  //     if (lastVisit) {
-  //       timeDifference = Date.now() - parseInt(lastVisit);
-  //     }
-  //     if (!lastVisit || timeDifference >= 604800000) {
-  //       let dialogRef = this.dialog.open(PresentationDialogComponent, { hasBackdrop: true, data: "swipe" });
-  //       dialogRef.afterClosed().subscribe(() => {
-  //         localStorage.setItem("alreadyVisitedSwipe", Date.now().toString());
-  //       });
-  //     }
-  //   }
-  // }
-
-
-  private initSearch() {
-    this.searchedValue = new FormControl<string>("");
-    this.searchObservable = this.searchedValue.valueChanges.pipe(
-      debounceTime(500),
-      tap(value => {
-        if (value !== "") {
-          this.filmService.search(value);
-          this.seekedAuthor = "";
-          this.seekedGenre = "";
-        } else {
-          this.filmService.getFilms(true);
-        }
-      })
-    ).subscribe();
-    this.failSearch = this.filmService.failSearch$.subscribe(
-      fail => {
-        if (fail) {
-          let snackbarRef = this.snackbar.open("Aucun film trouvé", undefined, { duration: 1500 });
-          snackbarRef.afterDismissed().subscribe(() => {
-            this.resetInput(true);
-          });
-        }
-      }
-    );
-  }
-
-  private resetInput(newFilms: boolean) {
-    this.failSearch.unsubscribe();
-    this.searchObservable.unsubscribe();
-    this.searchInput.nodeValue = "";
-    this.initSearch();
-    if (newFilms) {
-      this.filmService.getFilms(true);
-      this.seekedAuthor = "";
-      this.seekedGenre = "";
+  search(searchedValue:string) {
+    if (searchedValue === ""){
+      this.snackbar.open("Entrez un mot à rechercher...", undefined, { duration: 1500 });
+    } else {
+      this.filmService.search(searchedValue.toLowerCase());
     }
-  }
+  } 
 }

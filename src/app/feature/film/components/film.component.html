@@ -32,7 +32,11 @@
                 </div>
             </div>
             <ng-container *ngIf="isLikedOrDisliked$ | async as isLikedOrDisliked">
-                <input #searchInput type="text" [formControl]="searchedValue" name="search" placeholder="Rechercher"> 
+                <div id="searchArea">
+                    <input #searchInput type="text" [formControl]="searchedValue" placeholder="Rechercher" (keydown.Enter)="search(searchInput.value)"> 
+                    <img src="../../../../assets/loupe.png" alt="Rechercher" *ngIf="searchInput.value.length > 0" (click)="search(searchInput.value)">
+                    <div id="failSearch" *ngIf="(failSearch$ | async) && (searchInput.value.length > 0)" >Aucun film trouvé</div>
+                </div>
                 <ul id="activeGenresMobile">
                     <li *ngFor="let genre of selectedFilm.genres">{{genre}}</li>
                 </ul>
@@ -68,7 +72,11 @@
             (requestedItem)="getOneFilm($event)"></app-item-list>
         <ng-container *ngIf="isLikedOrDisliked$ | async as isLikedOrDisliked">
             <div id="itemArea">
-                <input #searchInput type="text" [formControl]="searchedValue" name="search" placeholder="Rechercher"> 
+                <div id="searchArea">
+                    <input #searchInput type="text" [formControl]="searchedValue" placeholder="Rechercher" (keydown.Enter)="search(searchInput.value)"> 
+                    <img src="../../../../assets/loupe.png" alt="Rechercher" *ngIf="searchInput.value.length > 0" (click)="search(searchInput.value)">
+                    <div id="failSearch" *ngIf="(failSearch$ | async) && (searchInput.value.length > 0)" >Aucun film trouvé</div>
+                </div>
                 <app-item id="film" *ngIf="user$ | async as user" 
                 [item]="selectedFilm" 
                 [itemType]="itemType"

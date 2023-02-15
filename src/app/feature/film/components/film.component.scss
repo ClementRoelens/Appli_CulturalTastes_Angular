@@ -84,7 +84,7 @@
     app-item {
         display: block;
         margin: auto;
-
+        margin-top:30px;
     }
 }
 
@@ -110,21 +110,37 @@ img {
     height: 20px;
 }
 
-
-
 input {
-    margin: 20px auto 30px auto;
-    width: 80px;
+    margin: 20px auto 0 auto;
+    width: 150px;
     display: block;
-    font-size: 0.7em;
+    font-size: 1em;
     border-radius: 5px;
     text-align: center;
     border-width: 1px;
 }
 
-input:hover, input:focus {
-    width: 150px;
-    font-size: 1em;
+#searchArea {
+    width:170px;
+    height:55px;
+    margin:auto;
+}
+
+#searchArea img {
+    height:15px;
+    width:15px;
+    position:relative;
+    top:-20px;
+    left:185px;
+    cursor:pointer;
+}
+
+#failSearch{
+    text-align: center;
+    font-size: 0.8em;
+    color:rgb(184, 20, 20);
+    top:-20px;
+    position:relative;
 }
 
 snack-bar-container {
