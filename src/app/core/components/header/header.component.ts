@@ -1,7 +1,7 @@
 import { SignupComponent } from './../signup/signup.component';
 import { Observable, tap } from 'rxjs';
 import { SigninComponent } from './../signin/signin.component';
-import { AuthService } from './../../auth.service';
+import { AuthService } from '../../services/auth.service';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { User } from 'src/app/shared/models/user.model';
 import { MatDialog } from '@angular/material/dialog';

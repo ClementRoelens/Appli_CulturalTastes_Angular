@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { BehaviorSubject, Observable, ReplaySubject, tap, throwError } from "rxjs";
-import { Film } from "./film.model";
+import { Film } from "../../feature/film/film.model";
 import { environment } from "src/environments/environment";
 import { catchError } from "rxjs/internal/operators/catchError";
 

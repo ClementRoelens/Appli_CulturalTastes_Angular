@@ -1,5 +1,5 @@
 import { httpInterceptorProviders } from './interceptors/index';
-import { AuthService } from './auth.service';
+import { AuthService } from './services/auth.service';
 import { Injectable, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from './components/header/header.component';
@@ -14,6 +14,8 @@ import {
 HammerModule, HammerGestureConfig, HAMMER_GESTURE_CONFIG} 
 from '@angular/platform-browser';
 import { PresentationDialogComponent } from './components/presentation-dialog/presentation-dialog.component';
+import { SharedService } from './services/shared.service';
+import { OpinionService } from './services/opinion.service';
 
 @Injectable()
 export class MyHammerConfig extends HammerGestureConfig {
@@ -43,6 +45,8 @@ export class MyHammerConfig extends HammerGestureConfig {
   ],
   providers:[
     AuthService,
+    SharedService,
+    OpinionService,
     httpInterceptorProviders,
     {
       provide: HAMMER_GESTURE_CONFIG,

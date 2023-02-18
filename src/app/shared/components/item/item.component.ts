@@ -3,7 +3,7 @@ import { SignupComponent } from './../../../core/components/signup/signup.compon
 import { SigninOrSignupComponent } from './../../signin-or-signup/signin-or-signup.component';
 import { CreateOrModifyOpinionComponent } from './../create-or-modify-opinion/create-or-modify-opinion.component';
 import { NewOpinionComponent } from './../new-opinion/new-opinion.component';
-import { SharedService } from './../../shared.service';
+import { SharedService } from '../../../core/services/shared.service';
 import { Opinion } from './../../models/opinion.model';
 import { environment } from './../../../../environments/environment';
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';

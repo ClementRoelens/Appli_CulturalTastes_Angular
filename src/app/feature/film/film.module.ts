@@ -4,7 +4,7 @@ import { NgModule } from "@angular/core";
 import { SharedModule } from "src/app/shared/shared.module";
 import { FilmComponent } from "./components/film.component";
 import { FilmRoutingModule } from "./film.routing-module";
-import { FilmService } from "./film.service";
+import { FilmService } from "../../core/services/film.service";
 import { FilmResolver } from './film.resolver';
 
 @NgModule({

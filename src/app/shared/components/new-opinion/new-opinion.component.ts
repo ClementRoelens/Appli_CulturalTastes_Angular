@@ -1,6 +1,6 @@
-import { OpinionService } from './../../opinion.service';
+import { OpinionService } from '../../../core/services/opinion.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { SharedService } from './../../shared.service';
+import { SharedService } from '../../../core/services/shared.service';
 import { Component, Inject, Input, OnInit } from '@angular/core';
 import { FormControl, FormBuilder } from '@angular/forms';
 

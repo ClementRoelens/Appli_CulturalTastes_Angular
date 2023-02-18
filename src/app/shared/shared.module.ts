@@ -2,8 +2,8 @@ import { SigninOrSignupComponent } from './signin-or-signup/signin-or-signup.com
 import { CreateOrModifyOpinionComponent } from './components/create-or-modify-opinion/create-or-modify-opinion.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NewOpinionComponent } from './components/new-opinion/new-opinion.component';
-import { OpinionService } from './opinion.service';
-import { SharedService } from './shared.service';
+import { OpinionService } from '../core/services/opinion.service';
+import { SharedService } from '../core/services/shared.service';
 import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -48,8 +48,7 @@ import { FullListComponent } from './components/full-list/full-list.component';
     RouterModule
   ],
   providers:[
-    SharedService,
-    OpinionService
+    
   ]
 })
 export class SharedModule { }

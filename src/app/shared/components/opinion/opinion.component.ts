@@ -1,8 +1,8 @@
-import { OpinionService } from './../../opinion.service';
+import { OpinionService } from '../../../core/services/opinion.service';
 import { Observable, combineLatest, map, tap, switchMap } from 'rxjs';
 import { Component, Input, OnInit, EventEmitter, Output, ChangeDetectionStrategy, HostBinding, HostListener } from '@angular/core';
 import { Opinion } from '../../models/opinion.model';
-import { AuthService } from 'src/app/core/auth.service';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
   selector: 'app-opinion',

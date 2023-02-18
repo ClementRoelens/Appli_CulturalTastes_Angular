@@ -1,14 +1,14 @@
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { PresentationDialogComponent } from '../../../core/components/presentation-dialog/presentation-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { OpinionService } from './../../../shared/opinion.service';
+import { OpinionService } from '../../../core/services/opinion.service';
 import { ActivatedRoute } from '@angular/router';
-import { AuthService } from './../../../core/auth.service';
+import { AuthService } from '../../../core/services/auth.service';
 import { ChangeDetectionStrategy, Component, HostBinding, HostListener, OnInit, ViewChild } from '@angular/core';
-import { combineLatest, map, Observable, take, tap, switchMap, delay, debounceTime, Subscription, fromEvent } from 'rxjs';
+import { combineLatest, map, Observable,  tap } from 'rxjs';
 import { User } from 'src/app/shared/models/user.model';
 import { Film } from '../film.model';
-import { FilmService } from '../film.service';
+import { FilmService } from '../../../core/services/film.service';
 import { MatSidenav } from '@angular/material/sidenav';
 import { FormControl } from '@angular/forms';
 
@@ -23,7 +23,6 @@ export class FilmComponent implements OnInit {
   @HostBinding("device") device!: string;
   @ViewChild("snavLeft") sidebarLeft!: MatSidenav;
   @ViewChild("snavRight") sidebarRight!: MatSidenav;
-  @ViewChild("searchInput") searchInput!: HTMLElement;
 
   user$!: Observable<User>;
   films$!: Observable<Film[]>;
@@ -35,7 +34,7 @@ export class FilmComponent implements OnInit {
   activeGenres$!: Observable<string[]>;
   failSearch$!: Observable<boolean>;
 
-  searchedValue!: FormControl;
+  searchedForm!: FormControl;
 
   itemType!: string;
   userId!: string;
@@ -43,6 +42,7 @@ export class FilmComponent implements OnInit {
   seekedId!: string;
   seekedGenre!: string;
   seekedAuthor!: string;
+  searchedValue!:string;
 
   constructor(
     private filmService: FilmService,
@@ -69,7 +69,7 @@ export class FilmComponent implements OnInit {
     if (this.seekedId !== undefined) {
       this.filmService.getOneFilm(this.seekedId);
     }
-    this.searchedValue = new FormControl<string>("");
+    this.searchedForm = new FormControl<string>("");
     this.failSearch$ = this.filmService.failSearch$;
     this.failSearch$.pipe(
       tap(res=>console.log("failSearch mis à jour : "+res))
@@ -157,6 +157,7 @@ export class FilmComponent implements OnInit {
   }
 
   getFilmsFromOneAuthor(author: string) {
+    this.searchedValue = "";
     this.filmService.getFilmsFromOneAuthor(author);
     this.seekedAuthor = author;
     this.seekedGenre = "";
@@ -170,6 +171,7 @@ export class FilmComponent implements OnInit {
   }
 
   getFilmsFromOneGenre(genre: string) {
+    this.searchedValue = "";
     this.filmService.getFilmsFromOneGenre(genre);
     this.seekedGenre = genre;
     this.seekedAuthor = "";
@@ -199,11 +201,12 @@ export class FilmComponent implements OnInit {
     }
   }
 
-  search(searchedValue:string) {
-    if (searchedValue === ""){
+  search(value:string) {
+    if (value === ""){
       this.snackbar.open("Entrez un mot à rechercher...", undefined, { duration: 1500 });
     } else {
-      this.filmService.search(searchedValue.toLowerCase());
+      this.filmService.search(value.toLowerCase());
+      this.searchedValue = value;
     }
   } 
 }

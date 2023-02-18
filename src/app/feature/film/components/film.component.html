@@ -8,6 +8,7 @@
                 [itemType]="itemType"
                 [selectedAuthor]="seekedAuthor"
                 [selectedGenre]="seekedGenre"
+                [searchedValue]="searchedValue"
                 [device]="device"
                 (requestedItem)="getOneFilm($event)"></app-item-list>
         </mat-sidenav>
@@ -33,7 +34,7 @@
             </div>
             <ng-container *ngIf="isLikedOrDisliked$ | async as isLikedOrDisliked">
                 <div id="searchArea">
-                    <input #searchInput type="text" [formControl]="searchedValue" placeholder="Rechercher" (keydown.Enter)="search(searchInput.value)"> 
+                    <input #searchInput type="text" [formControl]="searchedForm" placeholder="Rechercher" (keydown.Enter)="search(searchInput.value)"> 
                     <img src="../../../../assets/loupe.png" alt="Rechercher" *ngIf="searchInput.value.length > 0" (click)="search(searchInput.value)">
                     <div id="failSearch" *ngIf="(failSearch$ | async) && (searchInput.value.length > 0)" >Aucun film trouvé</div>
                 </div>
@@ -68,12 +69,13 @@
             [itemType]="itemType"
             [selectedAuthor]="seekedAuthor"
             [selectedGenre]="seekedGenre"
+            [searchedValue]="searchedValue"
             [device]="device"
             (requestedItem)="getOneFilm($event)"></app-item-list>
         <ng-container *ngIf="isLikedOrDisliked$ | async as isLikedOrDisliked">
             <div id="itemArea">
                 <div id="searchArea">
-                    <input #searchInput type="text" [formControl]="searchedValue" placeholder="Rechercher" (keydown.Enter)="search(searchInput.value)"> 
+                    <input #searchInput type="text" [formControl]="searchedForm" placeholder="Rechercher" (keydown.Enter)="search(searchInput.value)"> 
                     <img src="../../../../assets/loupe.png" alt="Rechercher" *ngIf="searchInput.value.length > 0" (click)="search(searchInput.value)">
                     <div id="failSearch" *ngIf="(failSearch$ | async) && (searchInput.value.length > 0)" >Aucun film trouvé</div>
                 </div>

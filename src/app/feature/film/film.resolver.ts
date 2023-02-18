@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
-import { FilmService } from './film.service';
+import { FilmService } from '../../core/services/film.service';
 import { Injectable } from "@angular/core";
 import { Film } from './film.model';
 

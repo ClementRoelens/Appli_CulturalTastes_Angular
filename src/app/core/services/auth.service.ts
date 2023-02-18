@@ -1,10 +1,10 @@
 import { tap, map, ReplaySubject, Subject } from 'rxjs';
-import { environment } from './../../environments/environment';
+import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
 import { BehaviorSubject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from "@angular/core";
-import { User } from '../shared/models/user.model';
+import { User } from '../../shared/models/user.model';
 import { JwtHelperService } from '@auth0/angular-jwt';
 
 const anonymouseUser: User = new User();

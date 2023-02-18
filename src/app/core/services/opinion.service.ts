@@ -1,8 +1,8 @@
 import { tap, ReplaySubject, Observable, BehaviorSubject, switchMap, map } from 'rxjs';
-import { environment } from './../../environments/environment';
+import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from "@angular/core";
-import { Opinion } from './models/opinion.model';
+import { Opinion } from '../../shared/models/opinion.model';
 
 const anonymousOpinion: Opinion = new Opinion;
 

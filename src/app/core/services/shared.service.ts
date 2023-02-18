@@ -1,13 +1,13 @@
 import { OpinionService } from './opinion.service';
-import { FilmService } from './../feature/film/film.service';
-import { AuthService } from './../core/auth.service';
+import { FilmService } from './film.service';
+import { AuthService } from './auth.service';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Film } from "../feature/film/film.model";
-import { User } from "./models/user.model";
+import { Film } from "../../feature/film/film.model";
+import { User } from "../../shared/models/user.model";
 import { tap, Observable } from 'rxjs';
-import { Opinion } from './models/opinion.model';
+import { Opinion } from '../../shared/models/opinion.model';
 
 @Injectable()
 export class SharedService {
