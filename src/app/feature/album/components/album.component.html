@@ -1,0 +1,100 @@
+<mat-spinner *ngIf="loading$ | async"></mat-spinner>
+<div *ngIf="!(loading$ | async)" id="content">
+    <!-- Contenu mobile -->
+    <mat-sidenav-container *ngIf="device === 'mobile-only'">
+        <mat-sidenav #snavLeft mode="over" hasBackdrop="true" position="start">
+            <app-item-list id="album-list" *ngIf="albums$ | async as albums" 
+                [items]="albums"
+                [itemType]="itemType"
+                [selectedAuthor]="seekedAuthor"
+                [selectedGenre]="seekedGenre"
+                [searchedValue]="searchedValue"
+                [device]="device"
+                (requestedItem)="getOneAlbum($event)"></app-item-list>
+        </mat-sidenav>
+        <mat-sidenav-content *ngIf="selectedAlbum$ |async as selectedAlbum">
+            <div id="leftSwipeArea" (swipe)="swipeEvent($event)">
+                <div id="leftSwipeHintArea" (click)="sidebarLeft.toggle()">
+                    <span class="swipeHintArea">F</span>
+                    <span class="swipeHintArea">I</span>
+                    <span class="swipeHintArea">L</span>
+                    <span class="swipeHintArea">M</span>
+                    <span class="swipeHintArea">S</span>
+                </div>
+            </div>
+            <div id="rightSwipeArea" (swipe)="swipeEvent($event)">
+                <div id="rightSwipeHintArea" (click)="sidebarRight.toggle()">
+                    <span class="swipeHintArea">G</span>
+                    <span class="swipeHintArea">E</span>
+                    <span class="swipeHintArea">N</span>
+                    <span class="swipeHintArea">R</span>
+                    <span class="swipeHintArea">E</span>
+                    <span class="swipeHintArea">S</span>
+                </div>
+            </div>
+            <ng-container *ngIf="isLikedOrDisliked$ | async as isLikedOrDisliked">
+                <div id="searchArea">
+                    <input #searchInput type="text" [formControl]="searchedForm" placeholder="Rechercher" (keydown.Enter)="search(searchInput.value)"> 
+                    <img src="../../../../assets/loupe.png" alt="Rechercher" *ngIf="searchInput.value.length > 0" (click)="search(searchInput.value)">
+                    <div id="failSearch" *ngIf="(failSearch$ | async) && (searchInput.value.length > 0)" >Aucun album trouvé</div>
+                </div>
+                <ul id="activeGenresMobile">
+                    <li *ngFor="let genre of selectedAlbum.genres">{{genre}}</li>
+                </ul>
+                <app-item id="album" *ngIf="user$ | async as user" 
+                    [item]="selectedAlbum" 
+                    [itemType]="itemType"
+                    [isLikedOrDisliked]="isLikedOrDisliked" 
+                    [likedOpinionsId]="user.likedOpinionsId" 
+                    [user]="user"
+                    [isLogged]="isLogged" 
+                    [device]="device" 
+                    (authorRequested)="getAlbumsFromOneAuthor($event)"
+                    ></app-item>
+            </ng-container>
+        </mat-sidenav-content>
+        <mat-sidenav #snavRight mode="over" hasBackdrop="true" position="end">
+            <ng-container *ngIf="activeGenres$ | async as activeGenres">
+                <app-genre-list id="genres" *ngIf="genres$ | async as genres" 
+                [genres]="genres"
+                [activeGenres]="activeGenres" 
+                (genreSelected)="getAlbumsFromOneGenre($event)"></app-genre-list>
+            </ng-container>
+        </mat-sidenav>
+    </mat-sidenav-container>
+    <!-- Contenu desktop -->
+    <ng-container *ngIf="device==='desktop-only' && (selectedAlbum$ | async) as selectedAlbum">
+        <app-item-list id="album-list" *ngIf="albums$ | async as albums" 
+            [items]="albums"
+            [itemType]="itemType"
+            [selectedAuthor]="seekedAuthor"
+            [selectedGenre]="seekedGenre"
+            [searchedValue]="searchedValue"
+            [device]="device"
+            (requestedItem)="getOneAlbum($event)"></app-item-list>
+        <ng-container *ngIf="isLikedOrDisliked$ | async as isLikedOrDisliked">
+            <div id="itemArea">
+                <div id="searchArea">
+                    <input #searchInput type="text" [formControl]="searchedForm" placeholder="Rechercher" (keydown.Enter)="search(searchInput.value)"> 
+                    <img src="../../../../assets/loupe.png" alt="Rechercher" *ngIf="searchInput.value.length > 0" (click)="search(searchInput.value)">
+                    <div id="failSearch" *ngIf="(failSearch$ | async) && (searchInput.value.length > 0)" >Aucun album trouvé</div>
+                </div>
+                <app-item id="album" *ngIf="user$ | async as user" 
+                [item]="selectedAlbum" 
+                [itemType]="itemType"
+                [isLikedOrDisliked]="isLikedOrDisliked" 
+                [likedOpinionsId]="user.likedOpinionsId" 
+                [user]="user"
+                [isLogged]="isLogged" 
+                [device]="device" 
+                (authorRequested)="getAlbumsFromOneAuthor($event)"></app-item>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="activeGenres$ | async as activeGenres">
+            <app-genre-list id="genres" *ngIf="genres$ | async as genres" 
+                [genres]="genres"
+                [activeGenres]="activeGenres" 
+                (genreSelected)="getAlbumsFromOneGenre($event)"></app-genre-list>
+        </ng-container>
+    </ng-container>
+</div>

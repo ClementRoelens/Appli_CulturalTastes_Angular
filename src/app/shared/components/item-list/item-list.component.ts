@@ -1,5 +1,5 @@
 import { Game } from '../../../feature/game/game.model';
-import { Album } from '../../../feature/music/album.model';
+import { Album } from '../../../feature/album/album.model';
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Film } from 'src/app/feature/film/film.model';
 

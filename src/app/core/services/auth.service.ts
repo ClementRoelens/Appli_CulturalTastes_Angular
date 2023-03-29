@@ -1,4 +1,4 @@
-import { tap, map, ReplaySubject, Subject } from 'rxjs';
+import { tap, map, throwError } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
 import { BehaviorSubject } from 'rxjs';
@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from "@angular/core";
 import { User } from '../../shared/models/user.model';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { catchError } from "rxjs/internal/operators/catchError";
 
 const anonymouseUser: User = new User();
 
@@ -15,6 +16,11 @@ export class AuthService {
     private _logging$ = new BehaviorSubject<boolean>(false);
     get logging$(): Observable<boolean> {
         return this._logging$;
+    }
+
+    private _errorMessage$ = new BehaviorSubject<string>("");
+    get errorMessage$(): Observable<string> {
+        return this._errorMessage$;
     }
 
     private _user$ = new BehaviorSubject<User>(anonymouseUser);
@@ -56,6 +62,19 @@ export class AuthService {
             map(user => {
                 delete user.token;
                 return user;
+            }),
+            catchError(error => {
+                if (error.status === 401){
+                    this._errorMessage$.next("Mot de passe incorrect");
+                    this._errorMessage$.next("");
+                    return throwError(() => new Error("Mot de passe incorrect"));
+                } else if (error.status === 404){
+                    this._errorMessage$.next("Utilisateur non-trouvé");
+                    this._errorMessage$.next("");
+                    return throwError(()=> new Error("Utilisateur non-trouvé"));
+                } else {
+                    return throwError(()=> new Error(error));
+                }
             }),
             tap(user => {
                 this._user$.next(user);

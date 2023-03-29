@@ -9,7 +9,7 @@ import { environment } from './../../../../environments/environment';
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Film } from 'src/app/feature/film/film.model';
 import { Game } from 'src/app/feature/game/game.model';
-import { Album } from 'src/app/feature/music/album.model';
+import { Album } from 'src/app/feature/album/album.model';
 import { MatDialog } from '@angular/material/dialog';
 import { SigninComponent } from 'src/app/core/components/signin/signin.component';
 import { User } from '../../models/user.model';

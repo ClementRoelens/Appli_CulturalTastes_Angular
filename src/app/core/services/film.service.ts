@@ -120,7 +120,7 @@ export class FilmService {
                 console.log("FilmService : erreur");
                 if (error.status === 404) {
                   this._failSearch$.next(true);
-                  return throwError(() => new Error('No films found'));
+                  return throwError(() => new Error('Aucun film trouvé'));
                 }
                 return throwError(() => new Error(error));
               })

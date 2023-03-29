@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { Film } from 'src/app/feature/film/film.model';
 import { Observable, map } from 'rxjs';
-import { Album } from 'src/app/feature/music/album.model';
+import { Album } from 'src/app/feature/album/album.model';
 
 @Component({
   selector: 'app-full-list',

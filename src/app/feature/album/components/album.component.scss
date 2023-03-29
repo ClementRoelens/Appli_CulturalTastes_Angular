@@ -1,0 +1,148 @@
+@media(orientation:portrait) {
+
+    app-item-list,
+    app-genre-list {
+        display: block;
+        width: 140px;
+        height: 100%;
+    }
+
+    input {
+        margin: 10px auto 0 auto;
+    }
+
+    #activeGenresMobile{
+        display:flex;
+        flex-direction: row;
+        justify-content: center;
+        height:auto;
+        max-width:50%;
+    }
+
+    #leftSwipeArea, 
+    #rightSwipeArea{
+        position:fixed;
+        height:100%;
+        width:25%;
+        overflow:none;
+    }
+
+    #leftSwipeArea{
+        left:-3px;        
+    }
+
+    #rightSwipeArea{
+        right:-8px;
+        display:flex;
+        flex-direction: column;
+        align-items:flex-end;
+        padding-right: 5px;
+    }
+
+    #leftSwipeHintArea, #rightSwipeHintArea {
+        position:relative;
+        top:30%;
+        display:flex;
+        flex-direction: column;
+        padding-left:3px;
+        border: solid 1px rgb(180 210 240);
+        border-radius: 6px;
+        background-color: rgb(187 221 255 / 68%);
+        width:20px;
+        height:122px;
+    }
+
+    #leftSwipeHintArea {
+        line-height:24px;
+    }
+
+    .swipeHintArea{
+        width:15px;
+        text-align: center;
+        opacity: 0.7;
+    }
+
+}
+
+@media(min-width:900px) {
+
+    app-item-list,
+    app-genre-list {
+        width: 30%;
+    }
+
+    app-genre-list {
+        padding-right: 40px;
+        top: 106px;
+    }
+
+    app-item-list {
+        left: 5%;
+        top: 10px;
+    }
+
+    app-item {
+        display: block;
+        margin: auto;
+        margin-top:30px;
+    }
+}
+
+mat-spinner {
+    margin: auto;
+    margin-top: 200px;
+}
+
+#content {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: 100%;
+}
+
+app-item-list,
+app-genre-list {
+    position: relative;
+}
+
+img {
+    width: 20px;
+    height: 20px;
+}
+
+input {
+    margin: 20px auto 0 auto;
+    width: 150px;
+    display: block;
+    font-size: 1em;
+    border-radius: 5px;
+    text-align: center;
+    border-width: 1px;
+}
+
+#searchArea {
+    width:170px;
+    height:55px;
+    margin:auto;
+}
+
+#searchArea img {
+    height:15px;
+    width:15px;
+    position:relative;
+    top:-20px;
+    left:185px;
+    cursor:pointer;
+}
+
+#failSearch{
+    text-align: center;
+    font-size: 0.8em;
+    color:rgb(184, 20, 20);
+    top:-20px;
+    position:relative;
+}
+
+snack-bar-container {
+    max-width: 15vw !important;
+}

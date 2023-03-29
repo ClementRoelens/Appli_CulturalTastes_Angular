@@ -1,3 +1,5 @@
+import { AlbumService } from './services/album.service';
+import { FilmService } from './services/film.service';
 import { httpInterceptorProviders } from './interceptors/index';
 import { AuthService } from './services/auth.service';
 import { Injectable, NgModule } from '@angular/core';
@@ -47,6 +49,8 @@ export class MyHammerConfig extends HammerGestureConfig {
     AuthService,
     SharedService,
     OpinionService,
+    FilmService,
+    AlbumService,
     httpInterceptorProviders,
     {
       provide: HAMMER_GESTURE_CONFIG,

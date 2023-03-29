@@ -8,6 +8,7 @@ import { FilmModule } from './feature/film/film.module';
 import { SharedModule } from './shared/shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HomeComponent } from './feature/home/home.component';
+import { AlbumModule } from './feature/album/album.module';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { HomeComponent } from './feature/home/home.component';
     CoreModule,
     SharedModule,
     FilmModule,
+    AlbumModule,
     BrowserAnimationsModule
   ],
   providers: [],
