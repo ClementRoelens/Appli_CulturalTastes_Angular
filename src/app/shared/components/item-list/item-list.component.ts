@@ -1,3 +1,4 @@
+import { Router, ActivatedRoute } from '@angular/router';
 import { Game } from '../../../feature/game/game.model';
 import { Album } from '../../../feature/album/album.model';
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
@@ -23,7 +24,10 @@ export class ItemListComponent implements OnInit {
   listTitle!: string;
   listLink!: string;
 
-  constructor() { }
+  constructor(
+    private router:Router,
+    private route:ActivatedRoute
+    ) { }
 
   ngOnInit(): void {
   }
@@ -43,6 +47,11 @@ export class ItemListComponent implements OnInit {
     this.requestedItem.emit(id);
 
   }
+
+  search() {
+    this.router.navigate([this.listLink], { relativeTo: this.route.parent });
+  }
+
 
   private titleCreation() {
     let itemNumber = (this.device === "mobile-only") ? 15 : 20;

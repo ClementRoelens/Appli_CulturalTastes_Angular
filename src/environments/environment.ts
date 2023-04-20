@@ -8,7 +8,7 @@ export const environment = {
   apiUrl:"https://localhost:7068",
   // Une fois déployé
   // apiUrl:"https://culturaltastesapi.azurewebsites.net",
-  imageStorageUrl:"https://culturaltastesstockage.blob.core.windows.net"
+  // imageStorageUrl:"https://culturaltastesstockage.blob.core.windows.net"
 };
 
 /*

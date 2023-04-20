@@ -6,7 +6,8 @@
     </thead>
     <tbody>
         <tr *ngFor="let item of items">
-            <td [routerLink]="'/'+item._id">{{item.title}}</td>
+            <!-- <td [routerLink]="[moduleName+'/'+item._id]">{{item.title}}</td> -->
+            <td  [routerLink]="['/', { outlets: { primary: moduleName+'/'+item._id, aux: null } }]">{{item.title}}</td>
             <td [routerLink]="[getEncodedAuthorUrl(item.author)]">{{item.author}}</td>
         </tr>
     </tbody>

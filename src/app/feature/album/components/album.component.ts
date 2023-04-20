@@ -54,7 +54,7 @@ export class AlbumComponent implements OnInit {
 
   ngOnInit(): void {
     this.checkWidth(window.innerWidth);
-    this.itemType = "film";
+    this.itemType = "album";
     this.seekedAuthor = "";
     this.seekedGenre = "";
     this.seekedId = this.route.snapshot.params["id"];

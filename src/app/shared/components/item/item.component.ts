@@ -49,9 +49,9 @@ export class ItemComponent implements OnInit {
   ngOnChanges() {
     console.log("Item focus : " + this.item._id);
     // Pour le dev
-    // this.imageUrl = `${environment.apiUrl}/film/${this.item.imageUrl}`;
+    this.imageUrl = `${environment.apiUrl}/film/images/${this.item.imageUrl}`;
     // Une fois déployé sur Azure
-    this.imageUrl = `${environment.imageStorageUrl}/${this.item.imageUrl}`;
+    // this.imageUrl = `${environment.imageStorageUrl}/${this.item.imageUrl}`;
     this.likedIcon = this.isLikedOrDisliked.liked ? "./assets/thumbup_done.png" : "./assets/thumbup.png";
     this.dislikedIcon = this.isLikedOrDisliked.disliked ? "./assets/thumbdown_done.png" : "./assets/thumbdown.png";
   }
