@@ -3,7 +3,7 @@
     <!-- Contenu mobile -->
     <mat-sidenav-container *ngIf="device === 'mobile-only'">
         <mat-sidenav #snavLeft mode="over" hasBackdrop="true" position="start">
-            <app-item-list id="film-list" *ngIf="films$ | async as films" 
+            <app-item-list class="items-list" id="film-list" *ngIf="films$ | async as films" 
                 [items]="films"
                 [itemType]="itemType"
                 [selectedAuthor]="seekedAuthor"
@@ -55,7 +55,7 @@
         </mat-sidenav-content>
         <mat-sidenav #snavRight mode="over" hasBackdrop="true" position="end">
             <ng-container *ngIf="activeGenres$ | async as activeGenres">
-                <app-genre-list id="genres" *ngIf="genres$ | async as genres" 
+                <app-genre-list class="genres-list" id="genres" *ngIf="genres$ | async as genres" 
                 [genres]="genres"
                 [activeGenres]="activeGenres" 
                 (genreSelected)="getFilmsFromOneGenre($event)"></app-genre-list>
@@ -64,7 +64,7 @@
     </mat-sidenav-container>
     <!-- Contenu desktop -->
     <ng-container *ngIf="device==='desktop-only' && (selectedFilm$ | async) as selectedFilm">
-        <app-item-list id="film-list" *ngIf="films$ | async as films" 
+        <app-item-list class="items-list" id="film-list" *ngIf="films$ | async as films" 
             [items]="films"
             [itemType]="itemType"
             [selectedAuthor]="seekedAuthor"
@@ -73,7 +73,7 @@
             [device]="device"
             (requestedItem)="getOneFilm($event)"></app-item-list>
         <ng-container *ngIf="isLikedOrDisliked$ | async as isLikedOrDisliked">
-            <div id="itemArea">
+            <div class="item-area">
                 <div id="searchArea">
                     <input #searchInput type="text" [formControl]="searchedForm" placeholder="Rechercher" (keydown.Enter)="search(searchInput.value)"> 
                     <img src="../../../../assets/loupe.png" alt="Rechercher" *ngIf="searchInput.value.length > 0" (click)="search(searchInput.value)">
@@ -91,7 +91,7 @@
             </div>
         </ng-container>
         <ng-container *ngIf="activeGenres$ | async as activeGenres">
-            <app-genre-list id="genres" *ngIf="genres$ | async as genres" 
+            <app-genre-list class="genres-list" id="genres" *ngIf="genres$ | async as genres" 
                 [genres]="genres"
                 [activeGenres]="activeGenres" 
                 (genreSelected)="getFilmsFromOneGenre($event)"></app-genre-list>

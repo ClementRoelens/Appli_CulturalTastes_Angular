@@ -1,11 +1,5 @@
 @media(orientation:portrait) {
-
-    app-item-list,
-    app-genre-list {
-        display: block;
-        width: 140px;
-        height: 100%;
-    }
+  
 
     input {
         margin: 10px auto 0 auto;
@@ -66,20 +60,7 @@
 
 @media(min-width:900px) {
 
-    app-item-list,
-    app-genre-list {
-        width: 30%;
-    }
-
-    app-genre-list {
-        padding-right: 40px;
-        top: 106px;
-    }
-
-    app-item-list {
-        left: 5%;
-        top: 10px;
-    }
+  
 
     app-item {
         display: block;
@@ -100,10 +81,6 @@ mat-spinner {
     height: 100%;
 }
 
-app-item-list,
-app-genre-list {
-    position: relative;
-}
 
 img {
     width: 20px;

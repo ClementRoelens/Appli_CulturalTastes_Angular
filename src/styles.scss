@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 
+
 @media (orientation:portrait) {
 
     html,
@@ -33,9 +34,25 @@
 
         width: 25px;
     }
+
+    .items-list,
+    .genres-list {
+        display: block;
+        width: 140px;
+        height: 100%;
+    }
+
+    .item-area {
+        width:75%;
+    }
 }
 
 @media (min-width:900px) {
+
+    // test
+    // .items-list,.item-area, .genres-list{
+    //     border:1px solid black;
+    // }
     ul li {
         border-radius: 5px;
         padding: 7px;
@@ -52,6 +69,27 @@
     #opinionIcons img {
         width: 30px;
         cursor: pointer;
+    }
+
+    .items-list{
+        width: 35%;
+        margin-left: 5%;
+        top: 10px;
+        position: relative;
+
+    }
+
+    .item-area {
+        width:70%;
+        position:relative;
+        right:5%;
+    }
+
+    .genres-list {
+        position:relative;
+        width:25%;
+        padding-right: 40px;
+        top: 106px;
     }
 }
 
