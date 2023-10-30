@@ -53,7 +53,7 @@ export class FilmService {
             url += urlP;
         }
         else {
-            url += 'getRandomFilms'
+            url += 'random'
         }
         this.http.get<Film[]>(url).pipe(
             tap(films => {
@@ -72,24 +72,24 @@ export class FilmService {
     }
 
     getFilmsFromOneAuthor(author: string) {
-        this.getFilms(true, `getRandomInOneAuthor/${author}`);
+        this.getFilms(true, `random/author/${author}`);
     }
 
     getAllFilmsInOneAuthor(author:string){
-        return this.http.get<Film[]>(`${environment.apiUrl}/film/getAllInOneAuthor/${author}`);
+        return this.http.get<Film[]>(`${environment.apiUrl}/film/author/${author}`);
     }
 
     getFilmsFromOneGenre(genre: string) {
-        this.getFilms(true, `getRandomInOneGenre/${genre}`);
+        this.getFilms(true, `random/genre/${genre}`);
     }
 
     getAllFilmsFromOneGenre(genre: string) {
-        return this.http.get<Film[]>(`${environment.apiUrl}/film/getAllInOneGenre/${genre}`);
+        return this.http.get<Film[]>(`${environment.apiUrl}/film/genre/${genre}`);
     }
 
     getOneFilm(id: string) {
             this._loadingOneFilm$.next(true);
-            this.http.get<Film>(`${environment.apiUrl}/film/getOneFilm/${id}`).pipe(
+            this.http.get<Film>(`${environment.apiUrl}/film/${id}`).pipe(
                 tap(film => this._selectedFilm$.next(film)),
                 tap(()=> this._loadingOneFilm$.next(false))
             ).subscribe();
@@ -102,7 +102,7 @@ export class FilmService {
 
     getGenres() {
         this._loadingGenres$.next(true);
-        this.http.get<string[]>(`${environment.apiUrl}/film/getGenres`).pipe(
+        this.http.get<string[]>(`${environment.apiUrl}/film/genres`).pipe(
             tap(genres => this._genres$.next(genres)),
             tap(() => this._loadingGenres$.next(false))
         ).subscribe();

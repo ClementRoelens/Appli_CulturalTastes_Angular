@@ -180,7 +180,7 @@ export class FilmComponent implements OnInit {
     }    
   }
 
-  swipeEvent(event: any) {
+  swipeEvent(event:any) {
     if (event.deltaX > 40) {
       this.sidebarLeft.toggle();
       if (this.device === "mobile-only") {

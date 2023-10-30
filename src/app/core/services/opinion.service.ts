@@ -80,7 +80,7 @@ export class OpinionService {
     }
 
     getOneOpinion(opinionId: string): Observable<Opinion> {
-        return this.http.get<Opinion>(`${environment.apiUrl}/opinion/getOneOpinion/${opinionId}`);
+        return this.http.get<Opinion>(`${environment.apiUrl}/opinion/${opinionId}`);
     }
 
     indexChange(n: number) {
@@ -97,7 +97,7 @@ export class OpinionService {
             id : opinionId,
             content : opinionContent
         };
-        this.http.put<Opinion>(`${environment.apiUrl}/opinion/modifyOpinion`,body).pipe(
+        this.http.put<Opinion>(`${environment.apiUrl}/opinion`,body).pipe(
             tap(opinion => this._selectedOpinion$.next(opinion))
         ).subscribe();
     }

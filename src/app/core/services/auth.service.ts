@@ -92,7 +92,7 @@ export class AuthService {
     }
 
     getUser(id: string) {
-        this.http.get<User>(`${environment.apiUrl}/user/getOneUser/${id}`).pipe(
+        this.http.get<User>(`${environment.apiUrl}/user/${id}`).pipe(
             tap(user => this._user$.next(user))
         ).subscribe();
     }
@@ -116,7 +116,7 @@ export class AuthService {
             const now = Date.now()/1000;
             if (now < expiredDate)  {
                 const id = decodedToken.userId;
-                this.http.get<User>(`${environment.apiUrl}/user/getOneUser/${id}`).pipe(
+                this.http.get<User>(`${environment.apiUrl}/user/${id}`).pipe(
                     tap(user => this._user$.next(user)),
                     tap(() => this._isLogged$.next(true))
                 ).subscribe();
